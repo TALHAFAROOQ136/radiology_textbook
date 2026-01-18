@@ -1,0 +1,111 @@
+.responsiveLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 1rem;
+  max-width: 100%;
+}
+
+.sidebar {
+  background-color: var(--ifm-color-emphasis-100);
+  padding: 1rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.sidebarContent h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--ifm-heading-color);
+}
+
+.quickLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.quickLinks li {
+  margin-bottom: 0.5rem;
+}
+
+.quickLinks a {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.quickLinks a:hover {
+  text-decoration: underline;
+}
+
+.progressSection {
+  margin-top: 1.5rem;
+}
+
+.progressSection h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progressBarFill {
+  height: 100%;
+  background-color: var(--ifm-color-primary);
+  transition: width 0.3s ease;
+}
+
+.progressSection p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+@media (min-width: 997px) {
+  .responsiveLayout {
+    flex-direction: row;
+  }
+
+  .mainContent {
+    flex: 1;
+    padding: 2rem;
+    max-width: calc(100% - 300px);
+  }
+
+  .sidebar {
+    flex: 0 0 300px;
+    padding: 2rem 1.5rem;
+    border-top: none;
+    border-left: 1px solid var(--ifm-color-emphasis-200);
+    position: sticky;
+    top: var(--ifm-navbar-height);
+    height: calc(100vh - var(--ifm-navbar-height));
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    padding: 0.75rem;
+  }
+
+  .sidebarContent h3 {
+    font-size: 0.9rem;
+  }
+
+  .quickLinks a {
+    font-size: 0.8rem;
+  }
+}

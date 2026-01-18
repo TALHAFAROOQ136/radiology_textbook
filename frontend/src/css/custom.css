@@ -1,0 +1,337 @@
+/**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/* You can override the default Docusaurus variables here. */
+:root {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-code-font-size: 95%;
+
+  /* Custom colors for medical education */
+  --medical-primary: #1a73e8;
+  --medical-secondary: #34a853;
+  --medical-accent: #fbbc04;
+  --medical-danger: #ea4335;
+  --medical-info: #4285f4;
+
+  /* Typography */
+  --ifm-font-family-base: 'Georgia, Cambria, "Times New Roman", Times, serif';
+  --ifm-font-size-base: 16px;
+  --ifm-line-height-base: 1.6;
+}
+
+/* Dark mode variables */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+
+  /* Dark mode medical colors */
+  --medical-primary: #8ab4f8;
+  --medical-secondary: #81c995;
+  --medical-accent: #fdd663;
+  --medical-danger: #f28b82;
+  --medical-info: #aecbfa;
+}
+
+/* Custom styles for medical education content */
+.medical-definition {
+  background-color: rgba(26, 115, 232, 0.1);
+  border-left: 4px solid var(--medical-primary);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.medical-definition-title {
+  font-weight: bold;
+  color: var(--medical-primary);
+  margin-bottom: 0.5rem;
+}
+
+.medical-warning {
+  background-color: rgba(234, 67, 53, 0.1);
+  border-left: 4px solid var(--medical-danger);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.medical-tip {
+  background-color: rgba(52, 168, 83, 0.1);
+  border-left: 4px solid var(--medical-secondary);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+/* Progress tracking styles */
+.progress-container {
+  margin: 1.5rem 0;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--medical-secondary);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-700);
+  margin-top: 0.5rem;
+}
+
+/* Learning objectives list */
+.learning-objectives {
+  background-color: rgba(52, 168, 83, 0.05);
+  border: 1px solid var(--medical-secondary);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.learning-objectives ul {
+  margin-bottom: 0;
+}
+
+.learning-objectives li {
+  margin-bottom: 0.5rem;
+}
+
+.learning-objectives li:last-child {
+  margin-bottom: 0;
+}
+
+/* Key terms section */
+.key-terms {
+  background-color: rgba(26, 115, 232, 0.05);
+  border-left: 4px solid var(--medical-primary);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.key-term {
+  margin-bottom: 1rem;
+}
+
+.key-term:last-child {
+  margin-bottom: 0;
+}
+
+.key-term-bold {
+  font-weight: bold;
+  color: var(--medical-primary);
+}
+
+/* Table enhancements for medical content */
+.markdown table {
+  display: table;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* Quiz and assessment styles */
+.quiz-container {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.quiz-question {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.quiz-option {
+  margin-bottom: 0.5rem;
+}
+
+.quiz-option input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+.quiz-feedback {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.quiz-feedback.correct {
+  background-color: rgba(52, 168, 83, 0.1);
+  border: 1px solid var(--medical-secondary);
+}
+
+.quiz-feedback.incorrect {
+  background-color: rgba(234, 67, 53, 0.1);
+  border: 1px solid var(--medical-danger);
+}
+
+/* Content navigation */
+.content-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.content-nav a {
+  text-decoration: none;
+}
+
+.content-nav .next {
+  text-align: right;
+}
+
+/* Responsive adjustments */
+@media (max-width: 996px) {
+  .content-nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .content-nav .next {
+    text-align: left;
+  }
+}
+
+/* Custom admonitions for medical content */
+.admonition.admonition-caution {
+  border-color: var(--medical-accent);
+}
+
+.admonition.admonition-caution .admonition-icon svg {
+  color: var(--medical-accent);
+}
+
+.admonition.admonition-important {
+  border-color: var(--medical-primary);
+}
+
+.admonition.admonition-important .admonition-icon svg {
+  color: var(--medical-primary);
+}
+
+/* Code block enhancements */
+.code-block-error-line {
+  background-color: rgba(234, 67, 53, 0.2);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+  border-left: 3px solid var(--medical-danger);
+}
+
+.code-block-success-line {
+  background-color: rgba(52, 168, 83, 0.2);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+  border-left: 3px solid var(--medical-secondary);
+}
+
+/* Custom buttons for medical actions */
+.button--primary {
+  background-color: var(--medical-primary);
+  border-color: var(--medical-primary);
+}
+
+.button--primary:hover {
+  background-color: #1669c9;
+  border-color: #1669c9;
+}
+
+.button--secondary {
+  background-color: var(--medical-secondary);
+  border-color: var(--medical-secondary);
+}
+
+.button--secondary:hover {
+  background-color: #2d9e49;
+  border-color: #2d9e49;
+}
+
+/* Search improvements */
+.navbar__search-input {
+  border-radius: 4px;
+}
+
+/* Footer enhancements */
+.footer {
+  background-color: var(--ifm-footer-background-color);
+  padding: var(--ifm-footer-padding-vertical) var(--ifm-footer-padding-horizontal);
+}
+
+/* Responsive typography */
+.markdown h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.markdown h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.markdown h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Custom card component for content modules */
+.card {
+  margin-bottom: 1.5rem;
+}
+
+.card__header {
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+/* Image enhancements for medical diagrams */
+.img--center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img--shadow {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Accessibility improvements */
+.anchor {
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 1rem);
+}
+
+/* Focus styles for keyboard navigation */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--medical-primary);
+  outline-offset: 2px;
+}

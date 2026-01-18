@@ -1,0 +1,615 @@
+openapi: 3.0.0
+info:
+  title: Content Management API
+  description: API for managing textbook content in the Radiology Text Book platform
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/content
+    description: Local development server
+  - url: https://api.radiology-textbook.com/content
+    description: Production server
+
+paths:
+  /search:
+    get:
+      summary: Search textbook content
+      description: Search across all textbook content with optional filters
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Search query term
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+          description: Number of results to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of results to skip
+        - name: content_type
+          in: query
+          schema:
+            type: string
+            enum: [part, chapter, section, subsection, appendix]
+          description: Filter by content type
+        - name: part_number
+          in: query
+          schema:
+            type: integer
+          description: Filter by specific part number
+        - name: tags
+          in: query
+          schema:
+            type: string
+          description: Filter by tags (comma-separated)
+        - name: include_content
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include full content in results
+      responses:
+        '200':
+          description: Search completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BookContent'
+                  total:
+                    type: integer
+                    example: 150
+                  query:
+                    type: string
+                    example: "radiation safety"
+                  took_ms:
+                    type: integer
+                    example: 45
+        '400':
+          description: Invalid search parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /parts:
+    get:
+      summary: Get all parts of the textbook
+      description: Retrieve all top-level parts of the textbook
+      parameters:
+        - name: include_chapters
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include chapters in the response
+      responses:
+        '200':
+          description: Parts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  parts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BookContent'
+                  total:
+                    type: integer
+                    example: 7
+        '401':
+          description: Unauthorized - user not authenticated (if authentication required)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /parts/{part_id}:
+    get:
+      summary: Get specific part details
+      description: Retrieve details of a specific part of the textbook
+      parameters:
+        - name: part_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the part
+        - name: include_chapters
+          in: query
+          schema:
+            type: boolean
+            default: true
+          description: Whether to include chapters in the response
+      responses:
+        '200':
+          description: Part retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  part:
+                    $ref: '#/components/schemas/BookContent'
+        '404':
+          description: Part not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /chapters:
+    get:
+      summary: Get all chapters
+      description: Retrieve all chapters with optional filters
+      parameters:
+        - name: part_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by specific part
+        - name: include_sections
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include sections in the response
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+          description: Number of results to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of results to skip
+      responses:
+        '200':
+          description: Chapters retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  chapters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BookContent'
+                  total:
+                    type: integer
+                    example: 56
+        '401':
+          description: Unauthorized - user not authenticated (if authentication required)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /chapters/{chapter_id}:
+    get:
+      summary: Get specific chapter
+      description: Retrieve details of a specific chapter
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the chapter
+        - name: include_content
+          in: query
+          schema:
+            type: boolean
+            default: true
+          description: Whether to include full content in the response
+        - name: include_sections
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include sections in the response
+      responses:
+        '200':
+          description: Chapter retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  chapter:
+                    $ref: '#/components/schemas/BookContent'
+        '404':
+          description: Chapter not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sections/{section_id}:
+    get:
+      summary: Get specific section
+      description: Retrieve details of a specific section
+      parameters:
+        - name: section_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the section
+        - name: include_content
+          in: query
+          schema:
+            type: boolean
+            default: true
+          description: Whether to include full content in the response
+      responses:
+        '200':
+          description: Section retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  section:
+                    $ref: '#/components/schemas/BookContent'
+        '404':
+          description: Section not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /tags:
+    get:
+      summary: Get all content tags
+      description: Retrieve all available tags for content organization
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+          description: Filter by tag category
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+          description: Number of results to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of results to skip
+      responses:
+        '200':
+          description: Tags retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  tags:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ContentTag'
+                  total:
+                    type: integer
+                    example: 120
+        '401':
+          description: Unauthorized - user not authenticated (if authentication required)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /tags/{tag_id}/content:
+    get:
+      summary: Get content with specific tag
+      description: Retrieve content items associated with a specific tag
+      parameters:
+        - name: tag_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the tag
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of results to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of results to skip
+        - name: include_content
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include full content in results
+      responses:
+        '200':
+          description: Content with tag retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  content:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BookContent'
+                  tag:
+                    $ref: '#/components/schemas/ContentTag'
+                  total:
+                    type: integer
+                    example: 45
+        '404':
+          description: Tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /recent:
+    get:
+      summary: Get recently updated content
+      description: Retrieve content items that were recently updated
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 50
+          description: Number of results to return
+        - name: days
+          in: query
+          schema:
+            type: integer
+            default: 7
+          description: Number of days to look back for updates
+        - name: include_content
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include full content in results
+      responses:
+        '200':
+          description: Recent content retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  content:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BookContent'
+                  last_updated:
+                    type: string
+                    format: date-time
+                    example: "2026-01-17T10:30:00Z"
+
+  /versions/{content_id}:
+    get:
+      summary: Get content versions
+      description: Retrieve all versions of a specific content item
+      parameters:
+        - name: content_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the content
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+          description: Number of versions to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of versions to skip
+      responses:
+        '200':
+          description: Content versions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  versions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ContentVersion'
+                  current_version:
+                    $ref: '#/components/schemas/BookContent'
+        '404':
+          description: Content not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    BookContent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        parent_id:
+          type: string
+          format: uuid
+          nullable: true
+        type:
+          type: string
+          enum: [part, chapter, section, subsection, appendix]
+        title:
+          type: string
+        slug:
+          type: string
+        content:
+          type: string
+          nullable: true
+        order_number:
+          type: integer
+        part_number:
+          type: integer
+          nullable: true
+        chapter_number:
+          type: integer
+          nullable: true
+        section_number:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          additionalProperties: true
+        is_published:
+          type: boolean
+        version:
+          type: string
+          example: "1.0.0"
+        language:
+          type: string
+          default: "en"
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        created_by:
+          type: string
+          format: uuid
+        updated_by:
+          type: string
+          format: uuid
+        child_count:
+          type: integer
+          description: Number of child content items (chapters in part, sections in chapter, etc.)
+
+    ContentTag:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+          nullable: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        usage_count:
+          type: integer
+          description: Number of content items tagged with this tag
+
+    ContentVersion:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        content_id:
+          type: string
+          format: uuid
+        version_number:
+          type: string
+          example: "1.2.0"
+        content_snapshot:
+          type: string
+          description: Snapshot of content at this version
+        changes:
+          type: string
+          description: Description of changes in this version
+        created_by:
+          type: string
+          format: uuid
+        created_at:
+          type: string
+          format: date-time
+        is_current:
+          type: boolean
+          description: Whether this is the current version
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        message:
+          type: string

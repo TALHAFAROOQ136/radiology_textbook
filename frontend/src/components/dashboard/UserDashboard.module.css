@@ -1,0 +1,188 @@
+.userDashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboardHeader {
+  margin-bottom: 2rem;
+}
+
+.dashboardHeader h2 {
+  margin: 0 0 0.5rem 0;
+  color: var(--ifm-heading-color);
+  font-size: 1.75rem;
+}
+
+.dashboardHeader p {
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.achievementsSection,
+.activitySection {
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.achievementsSection h3,
+.activitySection h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--ifm-heading-color);
+}
+
+.achievementsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.achievementItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--ifm-color-emphasis-200);
+  transition: background-color var(--ifm-transition-fast);
+}
+
+.achievementItem.earned {
+  background-color: var(--ifm-color-success-lightest);
+  border-left: 4px solid var(--ifm-color-success);
+}
+
+.achievementIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.achievementContent {
+  flex-grow: 1;
+}
+
+.achievementTitle {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  color: var(--ifm-heading-color);
+}
+
+.achievementDescription {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.activityItem {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--ifm-color-emphasis-200);
+}
+
+.activityIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.activityContent {
+  flex-grow: 1;
+}
+
+.activityTitle {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  color: var(--ifm-heading-color);
+}
+
+.activityMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.activityDate {
+  font-weight: 500;
+}
+
+.activityProgress,
+.activityScore {
+  background-color: var(--ifm-color-emphasis-300);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+}
+
+.activityScore {
+  color: var(--ifm-color-success);
+}
+
+@media (max-width: 996px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .userDashboard {
+    padding: 1rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .activityMeta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

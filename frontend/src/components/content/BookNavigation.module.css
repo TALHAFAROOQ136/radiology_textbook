@@ -1,0 +1,65 @@
+.bookNavigation {
+  padding: 1rem 0;
+}
+
+.navigationHeader h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: var(--ifm-heading-color);
+}
+
+.navigationList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.partItem {
+  margin-bottom: 1.5rem;
+}
+
+.partTitle {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-900);
+}
+
+.chapterList {
+  list-style: none;
+  padding-left: 0.5rem;
+  margin: 0.25rem 0;
+}
+
+.chapterItem {
+  margin: 0.25rem 0;
+}
+
+.chapterLink {
+  display: block;
+  padding: 0.5rem;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  color: var(--ifm-color-emphasis-700);
+  transition: all var(--ifm-transition-fast) ease;
+}
+
+.chapterLink:hover {
+  background-color: var(--ifm-menu-color-background-hover);
+  color: var(--ifm-color-primary);
+}
+
+.chapterLink.current {
+  background-color: var(--ifm-color-primary-lightest);
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+@media (min-width: 997px) {
+  .bookNavigation {
+    position: sticky;
+    top: calc(var(--ifm-navbar-height) + 1rem);
+    max-height: calc(100vh - var(--ifm-navbar-height) - 2rem);
+    overflow-y: auto;
+  }
+}

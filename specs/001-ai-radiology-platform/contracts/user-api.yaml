@@ -1,0 +1,533 @@
+openapi: 3.0.0
+info:
+  title: User API
+  description: API for user management and learning progress
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/user
+    description: Local development server
+  - url: https://api.radiology-textbook.com/user
+    description: Production server
+
+paths:
+  /progress:
+    get:
+      summary: Get user learning progress
+      description: Retrieve the user's progress across all chapters
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Progress retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  progress:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LearningProgress'
+                  summary:
+                    $ref: '#/components/schemas/ProgressSummary'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Update learning progress
+      description: Update the user's progress for a specific chapter
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - chapter_id
+              properties:
+                chapter_id:
+                  type: string
+                  format: uuid
+                completion_percentage:
+                  type: number
+                  format: float
+                  minimum: 0
+                  maximum: 100
+                time_spent_seconds:
+                  type: integer
+                quiz_scores:
+                  type: object
+                  additionalProperties: true
+      responses:
+        '200':
+          description: Progress updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  progress:
+                    $ref: '#/components/schemas/LearningProgress'
+
+  /progress/{chapter_id}:
+    get:
+      summary: Get progress for specific chapter
+      description: Retrieve the user's progress for a specific chapter
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the chapter
+      responses:
+        '200':
+          description: Chapter progress retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  progress:
+                    $ref: '#/components/schemas/LearningProgress'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Chapter not found or no progress recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /bookmarks:
+    get:
+      summary: Get user bookmarks
+      description: Retrieve all bookmarks created by the user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of bookmarks to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of bookmarks to skip
+        - name: tags
+          in: query
+          schema:
+            type: string
+          description: Filter bookmarks by tags (comma-separated)
+      responses:
+        '200':
+          description: Bookmarks retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  bookmarks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bookmark'
+                  total:
+                    type: integer
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Create a bookmark
+      description: Create a new bookmark for a specific section
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - chapter_id
+                - section_title
+                - content_snippet
+              properties:
+                chapter_id:
+                  type: string
+                  format: uuid
+                section_title:
+                  type: string
+                content_snippet:
+                  type: string
+                position:
+                  type: integer
+                notes:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '201':
+          description: Bookmark created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  bookmark:
+                    $ref: '#/components/schemas/Bookmark'
+
+  /bookmarks/{bookmark_id}:
+    put:
+      summary: Update a bookmark
+      description: Update an existing bookmark
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookmark_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the bookmark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Bookmark updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  bookmark:
+                    $ref: '#/components/schemas/Bookmark'
+    delete:
+      summary: Delete a bookmark
+      description: Remove a bookmark
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookmark_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the bookmark
+      responses:
+        '200':
+          description: Bookmark deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Bookmark deleted successfully"
+
+  /settings:
+    get:
+      summary: Get user settings
+      description: Retrieve user's personalization and preference settings
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Settings retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  settings:
+                    $ref: '#/components/schemas/UserSettings'
+    put:
+      summary: Update user settings
+      description: Update user's personalization and preference settings
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                language_preference:
+                  type: string
+                  example: "en"
+                learning_preferences:
+                  type: object
+                  additionalProperties: true
+                personalization_settings:
+                  type: object
+                  additionalProperties: true
+                study_reminders_enabled:
+                  type: boolean
+      responses:
+        '200':
+          description: Settings updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  settings:
+                    $ref: '#/components/schemas/UserSettings'
+
+  /quizzes:
+    get:
+      summary: Get quiz attempts
+      description: Retrieve user's quiz attempts and scores
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: chapter_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by specific chapter
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of attempts to return
+      responses:
+        '200':
+          description: Quiz attempts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  attempts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/QuizAttempt'
+                  summary:
+                    type: object
+                    properties:
+                      total_quizzes:
+                        type: integer
+                      passed_quizzes:
+                        type: integer
+                      average_score:
+                        type: number
+                        format: float
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    LearningProgress:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        chapter_id:
+          type: string
+          format: uuid
+        is_completed:
+          type: boolean
+        completion_percentage:
+          type: number
+          format: float
+        time_spent_seconds:
+          type: integer
+        quiz_scores:
+          type: object
+          additionalProperties: true
+        last_accessed_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ProgressSummary:
+      type: object
+      properties:
+        total_chapters:
+          type: integer
+        completed_chapters:
+          type: integer
+        overall_completion:
+          type: number
+          format: float
+        total_time_spent_minutes:
+          type: integer
+        average_quiz_score:
+          type: number
+          format: float
+
+    Bookmark:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        chapter_id:
+          type: string
+          format: uuid
+        section_title:
+          type: string
+        content_snippet:
+          type: string
+        position:
+          type: integer
+        notes:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    UserSettings:
+      type: object
+      properties:
+        language_preference:
+          type: string
+          example: "en"
+        learning_preferences:
+          type: object
+          additionalProperties: true
+        personalization_settings:
+          type: object
+          additionalProperties: true
+        study_reminders_enabled:
+          type: boolean
+        timezone:
+          type: string
+          example: "America/New_York"
+
+    QuizAttempt:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        quiz_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        score:
+          type: number
+          format: float
+        responses:
+          type: object
+          additionalProperties: true
+        feedback:
+          type: object
+          additionalProperties: true
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        is_passed:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        message:
+          type: string

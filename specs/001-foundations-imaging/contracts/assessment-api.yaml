@@ -1,0 +1,412 @@
+openapi: 3.0.0
+info:
+  title: Part I Assessment API
+  description: API for managing assessments in Part I: Foundations of Medical Imaging
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/assessment/part-1
+    description: Local development server
+  - url: https://api.radiology-textbook.com/assessment/part-1
+    description: Production server
+
+paths:
+  /attempts:
+    post:
+      summary: Submit assessment attempt
+      description: Submit a completed assessment attempt for scoring
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - assessment_id
+                - responses
+              properties:
+                assessment_id:
+                  type: string
+                  format: uuid
+                  description: ID of the assessment being attempted
+                responses:
+                  type: object
+                  description: User's responses to assessment questions
+                  additionalProperties: true
+                time_taken_seconds:
+                  type: integer
+                  description: Time taken to complete the assessment in seconds
+      responses:
+        '201':
+          description: Assessment attempt submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  attempt:
+                    $ref: '#/components/schemas/AssessmentAttempt'
+                  score:
+                    type: number
+                    format: float
+                  is_passed:
+                    type: boolean
+                  feedback:
+                    type: object
+                    additionalProperties: true
+        '400':
+          description: Invalid responses or assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /attempts/{attempt_id}:
+    get:
+      summary: Get assessment attempt details
+      description: Retrieve details of a specific assessment attempt
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: attempt_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the assessment attempt
+      responses:
+        '200':
+          description: Attempt details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  attempt:
+                    $ref: '#/components/schemas/AssessmentAttempt'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Assessment attempt not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /user/{user_id}/attempts:
+    get:
+      summary: Get user assessment attempts
+      description: Retrieve all assessment attempts for a specific user in Part I
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the user
+        - name: chapter_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by specific chapter
+        - name: assessment_type
+          in: query
+          schema:
+            type: string
+            enum: [quiz, case_study, interactive]
+          description: Filter by assessment type
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of attempts to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of attempts to skip
+      responses:
+        '200':
+          description: Assessment attempts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  attempts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AssessmentAttempt'
+                  pagination:
+                    $ref: '#/components/schemas/PaginationInfo'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /user/{user_id}/results:
+    get:
+      summary: Get user assessment results summary
+      description: Retrieve summary of assessment results for a user in Part I
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the user
+      responses:
+        '200':
+          description: Assessment results summary retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  summary:
+                    $ref: '#/components/schemas/AssessmentResultsSummary'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /chapters/{chapter_id}/attempts:
+    get:
+      summary: Get assessment attempts for chapter
+      description: Retrieve all assessment attempts for assessments in a specific chapter
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the chapter
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of attempts to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of attempts to skip
+      responses:
+        '200':
+          description: Chapter assessment attempts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  attempts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AssessmentAttempt'
+                  chapter_id:
+                    type: string
+                    format: uuid
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /validate:
+    post:
+      summary: Validate assessment responses
+      description: Validate a set of responses without submitting an attempt
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - assessment_id
+                - responses
+              properties:
+                assessment_id:
+                  type: string
+                  format: uuid
+                  description: ID of the assessment to validate against
+                responses:
+                  type: object
+                  description: User's responses to validate
+                  additionalProperties: true
+      responses:
+        '200':
+          description: Responses validated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  validation_results:
+                    type: object
+                    additionalProperties: true
+                  feedback:
+                    type: object
+                    additionalProperties: true
+        '400':
+          description: Invalid responses or assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    AssessmentAttempt:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        assessment_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        score:
+          type: number
+          format: float
+        responses:
+          type: object
+          additionalProperties: true
+        feedback:
+          type: object
+          additionalProperties: true
+        attempt_number:
+          type: integer
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        time_taken_seconds:
+          type: integer
+        is_passed:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+
+    AssessmentResultsSummary:
+      type: object
+      properties:
+        total_assessments:
+          type: integer
+        completed_assessments:
+          type: integer
+        passed_assessments:
+          type: integer
+        average_score:
+          type: number
+          format: float
+        highest_score:
+          type: number
+          format: float
+        lowest_score:
+          type: number
+          format: float
+        assessments_by_chapter:
+          type: array
+          items:
+            type: object
+            properties:
+              chapter_id:
+                type: string
+                format: uuid
+              chapter_title:
+                type: string
+              total_attempts:
+                type: integer
+              average_score:
+                  type: number
+                  format: float
+              pass_rate:
+                type: number
+                format: float
+
+    PaginationInfo:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        total_pages:
+          type: integer
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        message:
+          type: string

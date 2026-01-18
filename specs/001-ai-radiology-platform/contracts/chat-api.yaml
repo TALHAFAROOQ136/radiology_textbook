@@ -1,0 +1,303 @@
+openapi: 3.0.0
+info:
+  title: Chat API
+  description: API for AI-powered chatbot functionality
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/chat
+    description: Local development server
+  - url: https://api.radiology-textbook.com/chat
+    description: Production server
+
+paths:
+  /query:
+    post:
+      summary: Query the AI chatbot
+      description: Send a question to the AI chatbot and receive a response based on textbook content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: The question or query to ask the AI
+                context:
+                  type: object
+                  description: Additional context for the query
+                  properties:
+                    chapter_id:
+                      type: string
+                      format: uuid
+                      description: ID of the chapter for context
+                    section_title:
+                      type: string
+                      description: Title of the section for context
+                user_id:
+                  type: string
+                  format: uuid
+                  description: ID of the authenticated user (optional for anonymous queries)
+      responses:
+        '200':
+          description: Query processed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  response:
+                    type: string
+                    description: The AI's response to the query
+                  sources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        chapter:
+                          type: string
+                        section:
+                          type: string
+                        page_reference:
+                          type: string
+                  confidence:
+                    type: number
+                    format: float
+                    minimum: 0
+                    maximum: 1
+                    description: Confidence level of the response
+        '400':
+          description: Invalid query or insufficient context
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error or AI service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /selection:
+    post:
+      summary: Query selected text to AI
+      description: Submit selected text from the textbook with a query for context-aware responses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - selected_text
+                - query
+              properties:
+                selected_text:
+                  type: string
+                  description: The text that was selected by the user
+                query:
+                  type: string
+                  description: The question about the selected text
+                context:
+                  type: object
+                  description: Additional context for the query
+                  properties:
+                    chapter_id:
+                      type: string
+                      format: uuid
+                    section_title:
+                      type: string
+                user_id:
+                  type: string
+                  format: uuid
+                  description: ID of the authenticated user (optional for anonymous queries)
+      responses:
+        '200':
+          description: Query processed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  response:
+                    type: string
+                    description: The AI's response to the query about selected text
+                  explanation:
+                    type: string
+                    description: Explanation of the selected text
+                  related_content:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        chapter:
+                          type: string
+                        summary:
+                          type: string
+                  confidence:
+                    type: number
+                    format: float
+                    minimum: 0
+                    maximum: 1
+        '400':
+          description: Invalid input or selected text too short
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /history:
+    get:
+      summary: Get chat history
+      description: Retrieve the user's chat history (requires authentication)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of recent conversations to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of conversations to skip
+      responses:
+        '200':
+          description: Chat history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  history:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChatHistoryItem'
+                  total:
+                    type: integer
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sessions/{session_id}:
+    get:
+      summary: Get chat session details
+      description: Retrieve details of a specific chat session
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the chat session
+      responses:
+        '200':
+          description: Session details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  session:
+                    $ref: '#/components/schemas/ChatSession'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ChatHistoryItem:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        query:
+          type: string
+        response:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        context:
+          type: object
+          additionalProperties: true
+
+    ChatSession:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ChatMessage:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        role:
+          type: string
+          enum: [user, assistant]
+        content:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        message:
+          type: string
