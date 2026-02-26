@@ -56,3 +56,9 @@ yarn-error.log*
 ehthumbs.db
 Icon?
 Thumbs.db
+
+# Playwright MCP screenshots
+.playwright-mcp/
+
+# Windows artifacts
+nul
