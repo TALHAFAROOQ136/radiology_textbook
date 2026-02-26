@@ -1,0 +1,40 @@
+.menu {
+  flex-grow: 1;
+  padding: var(--ifm-menu-padding-vertical) 0;
+  position: relative;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Light theme defaults */
+  background-color: var(--ifm-menu-color-background, transparent);
+}
+
+.menuWithAnnouncementBar {
+  margin-bottom: var(--docusaurus-announcement-bar-height);
+}
+
+/* Dark mode overrides */
+html[data-theme='dark'] .menu {
+  background-color: var(--ifm-menu-color-background, transparent);
+}
+
+/* Additional dark mode styling for menu items */
+html[data-theme='dark'] .menu__list,
+html[data-theme='dark'] .menu__list-item,
+html[data-theme='dark'] .menu__link {
+  background-color: transparent;
+  color: var(--ifm-color-gray-200);
+}
+
+html[data-theme='dark'] .menu__link:hover {
+  background-color: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-primary-lightest);
+}
+
+html[data-theme='dark'] .menu__link--active {
+  color: var(--ifm-color-primary-lighter);
+  background-color: var(--ifm-color-emphasis-200);
+}
+
+html[data-theme='dark'] .menu__caret {
+  color: var(--ifm-color-gray-300);
+}

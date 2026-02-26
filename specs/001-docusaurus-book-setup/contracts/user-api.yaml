@@ -1,0 +1,914 @@
+openapi: 3.0.0
+info:
+  title: User Management API
+  description: API for user progress tracking and management in the Radiology Text Book platform
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/user
+    description: Local development server
+  - url: https://api.radiology-textbook.com/user
+    description: Production server
+
+paths:
+  /progress:
+    get:
+      summary: Get user learning progress
+      description: Retrieve the user's progress across all content
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: include_content_details
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include content details in progress records
+        - name: content_type
+          in: query
+          schema:
+            type: string
+            enum: [part, chapter, section, subsection]
+          description: Filter progress by content type
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [not_started, in_progress, completed]
+          description: Filter progress by status
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+          description: Number of progress records to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of progress records to skip
+      responses:
+        '200':
+          description: Progress retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  progress:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LearningProgress'
+                  summary:
+                    $ref: '#/components/schemas/ProgressSummary'
+                  total:
+                    type: integer
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Update learning progress
+      description: Update the user's progress for a specific content item
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content_id
+              properties:
+                content_id:
+                  type: string
+                  format: uuid
+                status:
+                  type: string
+                  enum: [not_started, in_progress, completed]
+                completion_percentage:
+                  type: number
+                  format: float
+                  minimum: 0
+                  maximum: 100
+                time_spent_seconds:
+                  type: integer
+                notes:
+                  type: string
+                  description: User's notes on the content
+                quiz_scores:
+                  type: object
+                  description: Scores for quizzes within the content
+                  additionalProperties: true
+      responses:
+        '200':
+          description: Progress updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  progress:
+                    $ref: '#/components/schemas/LearningProgress'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Content not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /progress/{content_id}:
+    get:
+      summary: Get progress for specific content
+      description: Retrieve the user's progress for a specific content item
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: content_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the content
+      responses:
+        '200':
+          description: Content progress retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  progress:
+                    $ref: '#/components/schemas/LearningProgress'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Content not found or no progress recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /quizzes:
+    get:
+      summary: Get available quizzes
+      description: Retrieve all quizzes available to the user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: content_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by specific content item
+        - name: include_questions
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include quiz questions in the response
+        - name: is_active
+          in: query
+          schema:
+            type: boolean
+            default: true
+          description: Filter by active status
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of quizzes to return
+      responses:
+        '200':
+          description: Quizzes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  quizzes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Quiz'
+                  total:
+                    type: integer
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /quizzes/attempt:
+    post:
+      summary: Submit quiz attempt
+      description: Submit a completed quiz attempt for scoring
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - quiz_id
+                - responses
+              properties:
+                quiz_id:
+                  type: string
+                  format: uuid
+                  description: ID of the quiz being attempted
+                responses:
+                  type: object
+                  description: User's responses to quiz questions
+                  additionalProperties: true
+                time_taken_seconds:
+                  type: integer
+                  description: Time taken to complete the quiz in seconds
+      responses:
+        '201':
+          description: Quiz attempt submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  attempt:
+                    $ref: '#/components/schemas/QuizAttempt'
+                  score:
+                    type: number
+                    format: float
+                  is_passed:
+                    type: boolean
+                  feedback:
+                    type: object
+                    additionalProperties: true
+        '400':
+          description: Invalid responses or quiz not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Quiz not available or max attempts reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /quizzes/attempts:
+    get:
+      summary: Get user quiz attempts
+      description: Retrieve all quiz attempts for the user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: quiz_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by specific quiz
+        - name: content_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by content the quiz is associated with
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of attempts to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of attempts to skip
+      responses:
+        '200':
+          description: Quiz attempts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  attempts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/QuizAttempt'
+                  pagination:
+                    $ref: '#/components/schemas/PaginationInfo'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /preferences:
+    get:
+      summary: Get user preferences
+      description: Retrieve all user preferences
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Preferences retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  preferences:
+                    type: object
+                    additionalProperties: true
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update user preferences
+      description: Update multiple user preferences at once
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Key-value pairs of user preferences
+              additionalProperties:
+                type: string
+      responses:
+        '200':
+          description: Preferences updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  preferences:
+                    type: object
+                    additionalProperties: true
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /bookmarks:
+    get:
+      summary: Get user bookmarks
+      description: Retrieve all bookmarks created by the user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of bookmarks to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of bookmarks to skip
+        - name: tags
+          in: query
+          schema:
+            type: string
+          description: Filter bookmarks by tags (comma-separated)
+      responses:
+        '200':
+          description: Bookmarks retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  bookmarks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserBookmark'
+                  total:
+                    type: integer
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Create a bookmark
+      description: Create a new bookmark for a specific content section
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content_id
+                - title
+              properties:
+                content_id:
+                  type: string
+                  format: uuid
+                  description: ID of the content being bookmarked
+                title:
+                  type: string
+                  description: Title of the bookmark
+                description:
+                  type: string
+                  description: Description or note for the bookmark
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: Tags for organizing bookmarks
+      responses:
+        '201':
+          description: Bookmark created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  bookmark:
+                    $ref: '#/components/schemas/UserBookmark'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /bookmarks/{bookmark_id}:
+    put:
+      summary: Update a bookmark
+      description: Update an existing bookmark
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookmark_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the bookmark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Bookmark updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  bookmark:
+                    $ref: '#/components/schemas/UserBookmark'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Bookmark not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Delete a bookmark
+      description: Remove a bookmark
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: bookmark_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the bookmark
+      responses:
+        '200':
+          description: Bookmark deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Bookmark deleted successfully"
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Bookmark not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /dashboard:
+    get:
+      summary: Get user dashboard
+      description: Retrieve user's dashboard with progress summary and recommendations
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Dashboard retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  dashboard:
+                    type: object
+                    properties:
+                      progress_summary:
+                        $ref: '#/components/schemas/ProgressSummary'
+                      recent_activity:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/UserActivity'
+                      recommendations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Recommendation'
+                      quiz_stats:
+                        $ref: '#/components/schemas/QuizStats'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    LearningProgress:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        content_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [not_started, in_progress, completed]
+        completion_percentage:
+          type: number
+          format: float
+        time_spent_seconds:
+          type: integer
+        last_accessed_at:
+          type: string
+          format: date-time
+        first_accessed_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        notes:
+          type: string
+        quiz_scores:
+          type: object
+          additionalProperties: true
+        engagement_metrics:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ProgressSummary:
+      type: object
+      properties:
+        total_parts:
+          type: integer
+        completed_parts:
+          type: integer
+        total_chapters:
+          type: integer
+        completed_chapters:
+          type: integer
+        total_sections:
+          type: integer
+        completed_sections:
+          type: integer
+        overall_completion:
+          type: number
+          format: float
+        total_time_spent_minutes:
+          type: integer
+        average_quiz_score:
+          type: number
+          format: float
+        last_activity_at:
+          type: string
+          format: date-time
+
+    Quiz:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        content_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        questions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              question:
+                type: string
+              options:
+                type: array
+                items:
+                  type: string
+              correct_answer:
+                type: string
+              explanation:
+                type: string
+        passing_score:
+          type: number
+          format: float
+        max_attempts:
+          type: integer
+        time_limit_minutes:
+          type: integer
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    QuizAttempt:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        quiz_id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        attempt_number:
+          type: integer
+        score:
+          type: number
+          format: float
+        responses:
+          type: object
+          additionalProperties: true
+        feedback:
+          type: object
+          additionalProperties: true
+        started_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+        time_taken_seconds:
+          type: integer
+        is_passed:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+
+    UserBookmark:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        content_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    UserActivity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [content_viewed, quiz_attempted, bookmark_created, progress_updated]
+        content_id:
+          type: string
+          format: uuid
+        content_title:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        details:
+          type: object
+          additionalProperties: true
+
+    Recommendation:
+      type: object
+      properties:
+        content_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        reason:
+          type: string
+          description: Reason for the recommendation
+        confidence:
+          type: number
+          format: float
+        priority:
+          type: integer
+          description: Priority of the recommendation (higher is more important)
+
+    QuizStats:
+      type: object
+      properties:
+        total_quizzes:
+          type: integer
+        completed_quizzes:
+          type: integer
+        passed_quizzes:
+          type: integer
+        average_score:
+          type: number
+          format: float
+        highest_score:
+          type: number
+          format: float
+        lowest_score:
+          type: number
+          format: float
+
+    PaginationInfo:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        total_pages:
+          type: integer
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        message:
+          type: string

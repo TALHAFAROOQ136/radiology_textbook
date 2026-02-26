@@ -1,0 +1,532 @@
+openapi: 3.0.0
+info:
+  title: RAG Chatbot API
+  description: API for the RAG (Retrieval-Augmented Generation) chatbot with text selection functionality
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/chat
+    description: Local development server
+  - url: https://api.radiology-textbook.com/chat
+    description: Production server
+
+paths:
+  /query:
+    post:
+      summary: Submit a general query to the chatbot
+      description: Send a question to the AI chatbot and receive a response based on textbook content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: The question or query to ask the AI
+                context:
+                  type: object
+                  description: Additional context for the query
+                  properties:
+                    page_reference:
+                      type: string
+                      description: Reference to the current page/chapter
+                    previous_conversation:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ConversationTurn'
+                      description: Previous conversation history for context
+                    user_proficiency:
+                      type: string
+                      enum: [student, resident, attending, other]
+                      description: User's medical proficiency level for tailored responses
+                user_id:
+                  type: string
+                  format: uuid
+                  description: ID of the authenticated user (optional for anonymous queries)
+                session_id:
+                  type: string
+                  format: uuid
+                  description: Session identifier for conversation continuity
+      responses:
+        '200':
+          description: Query processed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  response:
+                    $ref: '#/components/schemas/ChatResponse'
+                  sources:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SourceCitation'
+                  confidence:
+                    type: number
+                    format: float
+                    minimum: 0
+                    maximum: 1
+                    description: Confidence level of the response
+        '400':
+          description: Invalid query or insufficient context
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error or AI service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /selection:
+    post:
+      summary: Query selected text to AI
+      description: Submit selected text from the textbook with a query for context-aware responses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - selected_text
+                - query
+              properties:
+                selected_text:
+                  type: string
+                  description: The text that was selected by the user
+                query:
+                  type: string
+                  description: The question about the selected text
+                context:
+                  type: object
+                  description: Additional context for the query
+                  properties:
+                    page_reference:
+                      type: string
+                      description: Reference to the current page/chapter
+                    surrounding_text:
+                      type: string
+                      description: Text before and after the selection for context
+                    previous_conversation:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ConversationTurn'
+                      description: Previous conversation history for context
+                    user_proficiency:
+                      type: string
+                      enum: [student, resident, attending, other]
+                      description: User's medical proficiency level
+                user_id:
+                  type: string
+                  format: uuid
+                  description: ID of the authenticated user (optional for anonymous queries)
+                session_id:
+                  type: string
+                  format: uuid
+                  description: Session identifier for conversation continuity
+      responses:
+        '200':
+          description: Query processed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  response:
+                    $ref: '#/components/schemas/ChatResponse'
+                  explanation:
+                    type: string
+                    description: Explanation of the selected text
+                  related_content:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RelatedContent'
+                  confidence:
+                    type: number
+                    format: float
+                    minimum: 0
+                    maximum: 1
+        '400':
+          description: Invalid input or selected text too short
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /conversations:
+    get:
+      summary: Get conversation history
+      description: Retrieve the user's conversation history (requires authentication)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+          description: Number of recent conversations to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Number of conversations to skip
+        - name: session_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by specific session
+      responses:
+        '200':
+          description: Conversation history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  conversations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ConversationSession'
+                  total:
+                    type: integer
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /conversations/{session_id}:
+    get:
+      summary: Get specific conversation details
+      description: Retrieve details of a specific conversation session
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the conversation session
+      responses:
+        '200':
+          description: Session details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  conversation:
+                    $ref: '#/components/schemas/ConversationSession'
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Conversation session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /conversations/{session_id}/export:
+    get:
+      summary: Export conversation
+      description: Export a conversation session as a structured document
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: session_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the conversation session
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [json, pdf, text]
+            default: json
+          description: Export format
+      responses:
+        '200':
+          description: Conversation exported successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  export_data:
+                    type: string
+                    description: The exported conversation data
+        '401':
+          description: Unauthorized - user not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /feedback:
+    post:
+      summary: Submit feedback on a response
+      description: Provide feedback on the quality and accuracy of an AI response
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - response_id
+                - rating
+              properties:
+                response_id:
+                  type: string
+                  format: uuid
+                  description: ID of the response being rated
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  description: Rating of the response quality (1-5 stars)
+                is_helpful:
+                  type: boolean
+                  description: Whether the response was helpful
+                feedback_text:
+                  type: string
+                  description: Additional textual feedback
+                reported_issue:
+                  type: string
+                  enum: [inaccurate, irrelevant, unsafe, other]
+                  description: Type of issue being reported
+      responses:
+        '200':
+          description: Feedback submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Feedback submitted successfully"
+        '400':
+          description: Invalid feedback data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /validate-query:
+    post:
+      summary: Validate a query before processing
+      description: Check if a query is appropriate and can be processed by the system
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: The query to validate
+                selected_text:
+                  type: string
+                  description: Selected text for context (if applicable)
+      responses:
+        '200':
+          description: Query validation completed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  is_valid:
+                    type: boolean
+                  reason:
+                    type: string
+                    description: Reason if query is invalid
+                  suggested_query:
+                    type: string
+                    description: Suggested improvement to the query
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ChatResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        query_id:
+          type: string
+          format: uuid
+        response_text:
+          type: string
+        confidence_score:
+          type: number
+          format: float
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceCitation'
+        citations:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              reference:
+                type: string
+        token_usage:
+          type: object
+          properties:
+            prompt_tokens:
+              type: integer
+            completion_tokens:
+              type: integer
+            total_tokens:
+              type: integer
+        processing_time_ms:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+
+    SourceCitation:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        source_type:
+          type: string
+          enum: [chapter, section, figure, table, reference]
+        source_identifier:
+          type: string
+        content_excerpt:
+          type: string
+        page_number:
+          type: integer
+        relevance_score:
+          type: number
+          format: float
+        created_at:
+          type: string
+          format: date-time
+
+    ConversationSession:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        user_id:
+          type: string
+          format: uuid
+        session_token:
+          type: string
+        turns:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationTurn'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        is_active:
+          type: boolean
+
+    ConversationTurn:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        turn_number:
+          type: integer
+        query:
+          type: string
+        response:
+          $ref: '#/components/schemas/ChatResponse'
+        created_at:
+          type: string
+          format: date-time
+
+    RelatedContent:
+      type: object
+      properties:
+        title:
+          type: string
+        chapter:
+          type: string
+        section:
+          type: string
+        summary:
+          type: string
+        relevance_score:
+          type: number
+          format: float
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        message:
+          type: string

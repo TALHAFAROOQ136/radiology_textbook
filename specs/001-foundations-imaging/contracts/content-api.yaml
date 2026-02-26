@@ -1,0 +1,453 @@
+openapi: 3.0.0
+info:
+  title: Part I Content API
+  description: API for accessing and managing Part I: Foundations of Medical Imaging content
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/content/part-1
+    description: Local development server
+  - url: https://api.radiology-textbook.com/content/part-1
+    description: Production server
+
+paths:
+  /chapters:
+    get:
+      summary: Get all Part I chapters
+      description: Retrieve all 5 foundational chapters in Part I: Foundations of Medical Imaging
+      parameters:
+        - name: include_content
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include full chapter content in response
+        - name: include_assessments
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Whether to include assessment data with chapters
+      responses:
+        '200':
+          description: Chapters retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  chapters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Chapter'
+                  count:
+                    type: integer
+                    example: 5
+
+  /chapters/{chapter_id}:
+    get:
+      summary: Get specific chapter
+      description: Retrieve a specific chapter from Part I by ID
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the chapter to retrieve
+        - name: include_content
+          in: query
+          schema:
+            type: boolean
+            default: true
+          description: Whether to include full chapter content in response
+        - name: include_multimedia
+          in: query
+          schema:
+            type: boolean
+            default: true
+          description: Whether to include multimedia assets with the chapter
+      responses:
+        '200':
+          description: Chapter retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  chapter:
+                    $ref: '#/components/schemas/ChapterWithContent'
+        '404':
+          description: Chapter not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /chapters/{chapter_id}/sections:
+    get:
+      summary: Get chapter sections
+      description: Retrieve all sections within a specific chapter
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the chapter
+      responses:
+        '200':
+          description: Sections retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  sections:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ContentSection'
+                  chapter_id:
+                    type: string
+                    format: uuid
+
+  /chapters/{chapter_id}/sections/{section_id}:
+    get:
+      summary: Get specific section
+      description: Retrieve a specific section within a chapter
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the chapter
+        - name: section_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the section
+      responses:
+        '200':
+          description: Section retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  section:
+                    $ref: '#/components/schemas/ContentSection'
+        '404':
+          description: Section not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /chapters/{chapter_id}/assessments:
+    get:
+      summary: Get chapter assessments
+      description: Retrieve all assessments associated with a specific chapter
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the chapter
+      responses:
+        '200':
+          description: Assessments retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  assessments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Assessment'
+        '404':
+          description: Chapter not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /search:
+    get:
+      summary: Search Part I content
+      description: Search for specific terms within Part I chapters
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Search query term
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+          description: Maximum number of results to return
+        - name: include_excerpts
+          in: query
+          schema:
+            type: boolean
+            default: true
+          description: Whether to include content excerpts in results
+      responses:
+        '200':
+          description: Search completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SearchResult'
+                  total:
+                    type: integer
+                    example: 3
+
+  /chapters/{chapter_id}/multimedia:
+    get:
+      summary: Get chapter multimedia assets
+      description: Retrieve all multimedia assets associated with a specific chapter
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID of the chapter
+      responses:
+        '200':
+          description: Multimedia assets retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  assets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MultimediaAsset'
+                  chapter_id:
+                    type: string
+                    format: uuid
+
+components:
+  schemas:
+    Chapter:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        part_number:
+          type: integer
+          example: 1
+        chapter_number:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "Introduction to Radiology"
+        slug:
+          type: string
+          example: "introduction-to-radiology"
+        description:
+          type: string
+          example: "An overview of radiology and its role in modern medicine"
+        learning_objectives:
+          type: array
+          items:
+            type: string
+        duration_estimate:
+          type: integer
+          example: 45
+        is_published:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ChapterWithContent:
+      allOf:
+        - $ref: '#/components/schemas/Chapter'
+        - type: object
+          properties:
+            content:
+              type: string
+            multimedia_assets:
+              type: array
+              items:
+                $ref: '#/components/schemas/MultimediaAsset'
+            assessment_ids:
+              type: array
+              items:
+                type: string
+                format: uuid
+
+    ContentSection:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        chapter_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        slug:
+          type: string
+        content:
+          type: string
+        section_order:
+          type: integer
+        learning_objectives:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Assessment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        chapter_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum: [quiz, case_study, interactive]
+        questions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              question:
+                type: string
+              options:
+                type: array
+                items:
+                  type: string
+              correct_answer:
+                type: string
+              explanation:
+                type: string
+        passing_score:
+          type: number
+          format: float
+        max_attempts:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+
+    MultimediaAsset:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        filename:
+          type: string
+        display_name:
+          type: string
+        asset_type:
+          type: string
+          enum: [image, video, diagram, animation]
+        file_path:
+          type: string
+        alt_text:
+          type: string
+        caption:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+
+    SearchResult:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [chapter, section]
+        title:
+          type: string
+        excerpt:
+          type: string
+        chapter_number:
+          type: integer
+        section_order:
+          type: integer
+        score:
+          type: number
+          format: float
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        message:
+          type: string

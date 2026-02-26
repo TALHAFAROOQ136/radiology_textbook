@@ -1,0 +1,103 @@
+.errorBoundary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  padding: 2rem;
+  background-color: var(--ifm-color-danger-lightest);
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.errorContent {
+  text-align: center;
+  max-width: 600px;
+}
+
+.errorTitle {
+  color: var(--ifm-color-danger);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.errorMessage {
+  margin-bottom: 1.5rem;
+}
+
+.errorDetails {
+  margin-top: 1rem;
+  text-align: left;
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+.errorStack {
+  margin: 0;
+  padding: 0.5rem;
+  background-color: var(--ifm-color-emphasis-200);
+  border-radius: 0.25rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.875rem;
+  overflow-x: auto;
+  max-height: 200px;
+}
+
+.errorActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.refreshButton,
+.contactButton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ifm-transition-fast);
+}
+
+.refreshButton {
+  background-color: var(--ifm-color-primary);
+  color: white;
+}
+
+.refreshButton:hover {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+.contactButton {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-800);
+}
+
+.contactButton:hover {
+  background-color: var(--ifm-color-emphasis-300);
+}
+
+.secondaryButton {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-800);
+}
+
+.secondaryButton:hover {
+  background-color: var(--ifm-color-emphasis-300);
+}
+
+@media (max-width: 768px) {
+  .errorBoundary {
+    padding: 1rem;
+  }
+
+  .errorActions {
+    flex-direction: column;
+  }
+
+  .refreshButton,
+  .contactButton {
+    width: 100%;
+  }
+}

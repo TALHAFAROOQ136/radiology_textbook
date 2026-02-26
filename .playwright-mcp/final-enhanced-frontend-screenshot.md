@@ -1,0 +1,156 @@
+### Page state
+- Page URL: http://localhost:3000/
+- Page Title: Welcome to Radiology Textbook | Radiology Textbook
+- Page Snapshot:
+```yaml
+- generic [ref=e2]:
+  - region "Skip to main content":
+    - link "Skip to main content" [ref=e3] [cursor=pointer]:
+      - /url: "#__docusaurus_skipToContent_fallback"
+  - navigation "Main" [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - link "Radiology Textbook Logo Radiology Textbook" [ref=e7] [cursor=pointer]:
+          - /url: /
+          - img "Radiology Textbook Logo" [ref=e9]
+          - generic [ref=e10]: Radiology Textbook
+        - link "Textbook" [ref=e11] [cursor=pointer]:
+          - /url: /docs/part-1-foundations
+        - link "DICOM Viewer" [ref=e12] [cursor=pointer]:
+          - /url: /dicom-viewer-page
+        - link "Test DICOM" [ref=e13] [cursor=pointer]:
+          - /url: /test-dicom-viewer
+        - link "Blog" [ref=e14] [cursor=pointer]:
+          - /url: /blog
+      - generic [ref=e15]:
+        - link "GitHub(opens in new tab)" [ref=e16] [cursor=pointer]:
+          - /url: https://github.com/radiology-textbook/radiology-textbook
+          - text: GitHub
+          - img "(opens in new tab)" [ref=e17]
+        - button "Switch between dark and light mode (currently light mode)" [ref=e20] [cursor=pointer]:
+          - img [ref=e21]
+  - generic [ref=e23]:
+    - banner [ref=e24]:
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - heading "Radiology Textbook" [level=1] [ref=e28]
+          - paragraph [ref=e29]: Comprehensive Radiology Education for Medical Students
+          - generic [ref=e30]:
+            - link "Start Learning - 5min ⏱️" [ref=e31] [cursor=pointer]:
+              - /url: /docs/part-1-foundations/chapter-01-introduction
+            - link "View DICOM Cases" [ref=e32] [cursor=pointer]:
+              - /url: /dicom-viewer
+        - img [ref=e35]
+    - generic [ref=e42]:
+      - generic [ref=e44]:
+        - generic [ref=e45]: 50+
+        - generic [ref=e46]: Medical Imaging Cases
+      - generic [ref=e48]:
+        - generic [ref=e49]: 200+
+        - generic [ref=e50]: Educational Modules
+      - generic [ref=e52]:
+        - generic [ref=e53]: 10k+
+        - generic [ref=e54]: Active Learners
+      - generic [ref=e56]:
+        - generic [ref=e57]: 99.9%
+        - generic [ref=e58]: Uptime Guarantee
+    - main [ref=e59]:
+      - generic [ref=e61]:
+        - heading "Why Choose Our Platform" [level=2] [ref=e62]
+        - generic [ref=e63]:
+          - generic [ref=e65]:
+            - generic [ref=e66]: 📚
+            - heading "Comprehensive Curriculum" [level=3] [ref=e67]
+            - paragraph [ref=e68]: Complete radiology textbook covering all essential topics from basic physics to advanced imaging techniques. Structured learning paths designed by medical experts.
+          - generic [ref=e70]:
+            - generic [ref=e71]: 🖼️
+            - heading "Interactive DICOM Viewer" [level=3] [ref=e72]
+            - paragraph [ref=e73]: "Advanced medical imaging viewer with measurement tools, annotations, and multi-planar reconstruction. Support for all major imaging modalities: CT, MRI, X-Ray, Ultrasound."
+          - generic [ref=e75]:
+            - generic [ref=e76]: 👨‍⚕️
+            - heading "Expert Content" [level=3] [ref=e77]
+            - paragraph [ref=e78]: Developed by radiology experts with real-world clinical scenarios and evidence-based practices. Regular updates with the latest medical knowledge and guidelines.
+          - generic [ref=e80]:
+            - generic [ref=e81]: 📊
+            - heading "Progress Tracking" [level=3] [ref=e82]
+            - paragraph [ref=e83]: Monitor your learning progress with detailed analytics and personalized recommendations. Identify knowledge gaps and focus on areas that need improvement.
+          - generic [ref=e85]:
+            - generic [ref=e86]: 🏥
+            - heading "Case Studies" [level=3] [ref=e87]
+            - paragraph [ref=e88]: Real clinical cases with detailed explanations and diagnostic insights. Learn from complex scenarios that mirror actual practice.
+          - generic [ref=e90]:
+            - generic [ref=e91]: 📱
+            - heading "Mobile Friendly" [level=3] [ref=e92]
+            - paragraph [ref=e93]: Access your learning materials anywhere, anytime with our responsive design. Perfect for studying during breaks or while on rotation.
+      - generic [ref=e95]:
+        - heading "What Our Users Say" [level=2] [ref=e96]
+        - generic [ref=e97]:
+          - generic [ref=e99]:
+            - generic [ref=e100]: ❝
+            - paragraph [ref=e101]: This platform transformed how I learn radiology. The DICOM viewer is exceptional!
+            - generic [ref=e102]:
+              - strong [ref=e103]: Dr. Sarah Johnson
+              - generic [ref=e104]: Radiology Resident
+          - generic [ref=e106]:
+            - generic [ref=e107]: ❝
+            - paragraph [ref=e108]: The interactive cases helped me prepare for my board exams effectively.
+            - generic [ref=e109]:
+              - strong [ref=e110]: Dr. Michael Chen
+              - generic [ref=e111]: Medical Student
+          - generic [ref=e113]:
+            - generic [ref=e114]: ❝
+            - paragraph [ref=e115]: Best radiology education platform I've used. Highly recommended!
+            - generic [ref=e116]:
+              - strong [ref=e117]: Dr. Emily Rodriguez
+              - generic [ref=e118]: Practicing Radiologist
+    - generic [ref=e122]:
+      - heading "Ready to Transform Your Radiology Education?" [level=2] [ref=e123]
+      - paragraph [ref=e124]: Join thousands of medical professionals who trust our platform
+      - generic [ref=e125]:
+        - link "Get Started Free" [ref=e126] [cursor=pointer]:
+          - /url: /docs/part-1-foundations/chapter-01-introduction
+        - link "View Demo" [ref=e127] [cursor=pointer]:
+          - /url: /dicom-viewer
+  - contentinfo [ref=e128]:
+    - generic [ref=e129]:
+      - generic [ref=e130]:
+        - generic [ref=e131]:
+          - generic [ref=e132]: Content
+          - list [ref=e133]:
+            - listitem [ref=e134]:
+              - 'link "Part 1: Foundations" [ref=e135] [cursor=pointer]':
+                - /url: /docs/part-1-foundations/chapter-01-introduction
+            - listitem [ref=e136]:
+              - 'link "Part 2: Positioning" [ref=e137] [cursor=pointer]':
+                - /url: /docs/part-2-positioning/overview
+            - listitem [ref=e138]:
+              - 'link "Part 3: Chest" [ref=e139] [cursor=pointer]':
+                - /url: /docs/part-3-chest/overview
+        - generic [ref=e140]:
+          - generic [ref=e141]: Community
+          - list [ref=e142]:
+            - listitem [ref=e143]:
+              - link "Stack Overflow(opens in new tab)" [ref=e144] [cursor=pointer]:
+                - /url: https://stackoverflow.com/questions/tagged/docusaurus
+                - text: Stack Overflow
+                - img "(opens in new tab)" [ref=e145]
+            - listitem [ref=e147]:
+              - link "Discord(opens in new tab)" [ref=e148] [cursor=pointer]:
+                - /url: https://discordapp.com/invite/docusaurus
+                - text: Discord
+                - img "(opens in new tab)" [ref=e149]
+            - listitem [ref=e151]:
+              - link "Twitter(opens in new tab)" [ref=e152] [cursor=pointer]:
+                - /url: https://twitter.com/docusaurus
+                - text: Twitter
+                - img "(opens in new tab)" [ref=e153]
+        - generic [ref=e155]:
+          - generic [ref=e156]: More
+          - list [ref=e157]:
+            - listitem [ref=e158]:
+              - link "GitHub(opens in new tab)" [ref=e159] [cursor=pointer]:
+                - /url: https://github.com/facebook/docusaurus
+                - text: GitHub
+                - img "(opens in new tab)" [ref=e160]
+      - generic [ref=e163]: Copyright © 2026 Radiology Textbook. Built with Docusaurus.
+```

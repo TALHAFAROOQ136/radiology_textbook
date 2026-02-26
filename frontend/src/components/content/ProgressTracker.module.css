@@ -1,0 +1,125 @@
+.progressTracker {
+  background-color: var(--ifm-color-emphasis-100);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.progressHeader h3 {
+  margin: 0 0 1rem 0;
+  color: var(--ifm-heading-color);
+  font-size: 1.25rem;
+}
+
+.progressOverview {
+  margin-bottom: 1.5rem;
+}
+
+.progressItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.progressLabel {
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-800);
+}
+
+.progressValue {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--ifm-color-primary);
+}
+
+.progressBarContainer {
+  background-color: var(--ifm-color-emphasis-200);
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.progressBar {
+  height: 100%;
+  background-color: var(--ifm-color-primary);
+  transition: width 0.3s ease;
+  border-radius: 6px;
+  min-width: 0;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ifm-color-primary-light), var(--ifm-color-primary));
+}
+
+.progressDetails {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detailLabel {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 0.25rem;
+}
+
+.detailValue {
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-900);
+}
+
+.progressActions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.actionButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ifm-transition-fast);
+}
+
+.actionButton:first-child {
+  background-color: var(--ifm-color-primary);
+  color: white;
+}
+
+.actionButton:first-child:hover {
+  background-color: var(--ifm-color-primary-dark);
+}
+
+.secondaryButton {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-emphasis-800);
+}
+
+.secondaryButton:hover {
+  background-color: var(--ifm-color-emphasis-300);
+}
+
+@media (max-width: 768px) {
+  .progressDetails {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .progressActions {
+    flex-direction: column;
+  }
+
+  .actionButton {
+    width: 100%;
+  }
+}

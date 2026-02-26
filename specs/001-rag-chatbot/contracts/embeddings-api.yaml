@@ -1,0 +1,443 @@
+openapi: 3.0.0
+info:
+  title: RAG Embeddings API
+  description: API for managing vector embeddings for the RAG chatbot system
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/embeddings
+    description: Local development server
+  - url: https://api.radiology-textbook.com/embeddings
+    description: Production server
+
+paths:
+  /search:
+    post:
+      summary: Perform semantic search in content
+      description: Search for relevant content using vector similarity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: The search query text
+                top_k:
+                  type: integer
+                  default: 5
+                  description: Number of results to return
+                filters:
+                  type: object
+                  description: Filters to apply to the search
+                  properties:
+                    chapter_ids:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      description: Restrict search to specific chapters
+                    content_types:
+                      type: array
+                      items:
+                        type: string
+                        enum: [text, image_caption, table_summary]
+                      description: Restrict search to specific content types
+                    min_similarity:
+                      type: number
+                      format: float
+                      minimum: 0
+                      maximum: 1
+                      default: 0.5
+                      description: Minimum similarity threshold
+      responses:
+        '200':
+          description: Search completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SearchResult'
+                  query_embedding:
+                    type: array
+                    items:
+                      type: number
+                      format: float
+                    description: The vector representation of the query
+        '400':
+          description: Invalid search parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /index:
+    post:
+      summary: Index new content
+      description: Add new content to the vector database for retrieval
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+                - chapter_id
+              properties:
+                content:
+                  type: string
+                  description: The content to index
+                chapter_id:
+                  type: string
+                  format: uuid
+                  description: ID of the chapter this content belongs to
+                section_id:
+                  type: string
+                  format: uuid
+                  description: ID of the section (optional)
+                content_type:
+                  type: string
+                  enum: [text, image_caption, table_summary]
+                  default: text
+                  description: Type of content being indexed
+                chunk_index:
+                  type: integer
+                  description: Position of this chunk within the original content
+                metadata:
+                  type: object
+                  description: Additional metadata for the content
+                  additionalProperties: true
+      responses:
+        '201':
+          description: Content indexed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  embedding_id:
+                    type: string
+                    format: uuid
+                  chunk_size:
+                    type: integer
+                    description: Size of the content chunk in tokens
+                  embedding_dimensions:
+                    type: integer
+                    description: Dimensions of the generated embedding
+        '400':
+          description: Invalid content or indexing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /bulk-index:
+    post:
+      summary: Index multiple content items
+      description: Bulk index multiple content items for efficiency
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                required:
+                  - content
+                  - chapter_id
+                properties:
+                  content:
+                    type: string
+                    description: The content to index
+                  chapter_id:
+                    type: string
+                    format: uuid
+                    description: ID of the chapter this content belongs to
+                  section_id:
+                    type: string
+                    format: uuid
+                    description: ID of the section (optional)
+                  content_type:
+                    type: string
+                    enum: [text, image_caption, table_summary]
+                    default: text
+                    description: Type of content being indexed
+                  chunk_index:
+                    type: integer
+                    description: Position of this chunk within the original content
+                  metadata:
+                    type: object
+                    description: Additional metadata for the content
+                    additionalProperties: true
+      responses:
+        '201':
+          description: Content indexed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  indexed_count:
+                    type: integer
+                    description: Number of items successfully indexed
+                  failed_count:
+                    type: integer
+                    description: Number of items that failed to index
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        content_id:
+                          type: string
+                          format: uuid
+                        success:
+                          type: boolean
+                        error:
+                          type: string
+                          description: Error message if indexing failed
+        '400':
+          description: Invalid content or indexing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /delete:
+    delete:
+      summary: Delete embeddings
+      description: Remove embeddings from the vector database
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              oneOf:
+                - required: [embedding_ids]
+                - required: [chapter_id]
+              properties:
+                embedding_ids:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: Specific embedding IDs to delete
+                chapter_id:
+                  type: string
+                  format: uuid
+                  description: Delete all embeddings for a specific chapter
+                section_id:
+                  type: string
+                  format: uuid
+                  description: Delete all embeddings for a specific section (requires chapter_id)
+      responses:
+        '200':
+          description: Embeddings deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  deleted_count:
+                    type: integer
+                    description: Number of embeddings deleted
+        '400':
+          description: Invalid deletion parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /stats:
+    get:
+      summary: Get embedding statistics
+      description: Retrieve statistics about the vector database content
+      responses:
+        '200':
+          description: Statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  stats:
+                    type: object
+                    properties:
+                      total_embeddings:
+                        type: integer
+                        description: Total number of embeddings in the database
+                      total_content_chunks:
+                        type: integer
+                        description: Total number of content chunks indexed
+                      total_chapters:
+                        type: integer
+                        description: Number of chapters with indexed content
+                      avg_chunk_size:
+                        type: number
+                        format: float
+                        description: Average size of content chunks in tokens
+                      last_indexed_at:
+                        type: string
+                        format: date-time
+                        description: When the last indexing operation occurred
+                      embedding_model:
+                        type: string
+                        description: Model used for generating embeddings
+                      embedding_dimensions:
+                        type: integer
+                        description: Dimensions of the embeddings
+
+  /health:
+    get:
+      summary: Health check for embeddings service
+      description: Check if the embeddings service is operating normally
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  status:
+                    type: string
+                    example: "healthy"
+                  vector_db_status:
+                    type: string
+                    example: "connected"
+                  last_sync:
+                    type: string
+                    format: date-time
+        '503':
+          description: Service is unhealthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  status:
+                    type: string
+                    example: "unhealthy"
+                  error:
+                    type: string
+                    description: Reason for unhealthy status
+
+  /reindex:
+    post:
+      summary: Re-index content
+      description: Re-index existing content with updated embeddings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chapter_ids:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: Specific chapters to re-index (empty means all)
+                force_reindex:
+                  type: boolean
+                  default: false
+                  description: Force re-indexing even if content hasn't changed
+      responses:
+        '200':
+          description: Re-indexing started successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  job_id:
+                    type: string
+                    format: uuid
+                    description: ID of the re-indexing job
+                  estimated_duration:
+                    type: integer
+                    description: Estimated duration of the job in seconds
+                  total_items:
+                    type: integer
+                    description: Number of items to be re-indexed
+        '400':
+          description: Invalid re-indexing parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    SearchResult:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        content:
+          type: string
+        chapter_id:
+          type: string
+          format: uuid
+        section_id:
+          type: string
+          format: uuid
+        content_type:
+          type: string
+          enum: [text, image_caption, table_summary]
+        similarity_score:
+          type: number
+          format: float
+        metadata:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        message:
+          type: string
