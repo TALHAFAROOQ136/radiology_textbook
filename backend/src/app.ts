@@ -11,6 +11,7 @@ import { validate, sanitizeInput } from './middleware/validation-middleware';
 import authRoutes from './routes/auth';
 import contentRoutes from './routes/content';
 import userRoutes from './routes/user';
+import chatbotRoutes from './routes/chatbot';
 import logger from './utils/logger';
 
 // Create Express app
@@ -79,6 +80,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 
 // Health check endpoint
 app.get('/health', (req: Request, res: Response) => {

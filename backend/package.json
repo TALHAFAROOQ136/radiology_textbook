@@ -32,6 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "@neondatabase/serverless": "^0.4.3",
+    "@qdrant/js-client-rest": "^1.17.0",
     "@types/multer": "^2.0.0",
     "bcrypt": "^5.1.0",
     "better-auth": "^0.2.1",
