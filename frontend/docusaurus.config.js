@@ -47,7 +47,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/radiology-textbook/radiology-textbook/tree/main/',
+            'https://github.com/TALHAFAROOQ136/radiology_textbook/tree/master/',
         },
         blog: {
           path: 'blog',
@@ -58,7 +58,7 @@ const config = {
             xslt: true,
           },
           editUrl:
-            'https://github.com/radiology-textbook/radiology-textbook/edit/main/',
+            'https://github.com/TALHAFAROOQ136/radiology_textbook/edit/master/',
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
@@ -93,7 +93,7 @@ const config = {
           },
           { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/radiology-textbook/radiology-textbook',
+            href: 'https://github.com/TALHAFAROOQ136/radiology_textbook',
             label: 'GitHub',
             position: 'right',
           },
@@ -141,7 +141,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/TALHAFAROOQ136/radiology_textbook',
               },
             ],
           },
