@@ -13,15 +13,14 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://radiology-textbook.com',
+  url: 'https://TALHAFAROOQ136.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/radiology_textbook/',
 
   // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'radiology-textbook', // Usually your GitHub org/user name.
-  projectName: 'radiology-textbook', // Usually your repo name.
+  organizationName: 'TALHAFAROOQ136',
+  projectName: 'radiology_textbook',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   markdown: {
