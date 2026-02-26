@@ -335,3 +335,112 @@ select:focus {
   outline: 2px solid var(--medical-primary);
   outline-offset: 2px;
 }
+
+/* Sidebar dark mode enhancements */
+html[data-theme='dark'] .menu__list,
+html[data-theme='dark'] .menu__list-item {
+  background-color: transparent;
+}
+
+html[data-theme='dark'] .menu__link {
+  color: var(--ifm-color-gray-200);
+  background-color: transparent;
+}
+
+html[data-theme='dark'] .menu__link:hover {
+  background-color: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-white);
+}
+
+html[data-theme='dark'] .menu__link--active {
+  color: var(--ifm-color-primary-lighter);
+  background-color: var(--ifm-color-emphasis-300);
+}
+
+html[data-theme='dark'] .menu__list-item-collapsible {
+  background-color: transparent;
+}
+
+html[data-theme='dark'] .menu__list-item-collapsible:hover {
+  background-color: var(--ifm-color-emphasis-200);
+}
+
+html[data-theme='dark'] .menu__caret {
+  color: var(--ifm-color-gray-300);
+}
+
+html[data-theme='dark'] .menu__caret:hover {
+  color: var(--ifm-color-white);
+}
+
+/* Enhanced dark mode for sidebar search and other elements */
+html[data-theme='dark'] .interactive-search-container {
+  background-color: #1f2937;
+  border-bottom: 1px solid #374151;
+}
+
+html[data-theme='dark'] .interactive-search-input {
+  background-color: #374151;
+  border: 1px solid #4b5563;
+  color: #f9fafb;
+}
+
+html[data-theme='dark'] .clear-search-button {
+  background: #4b5563;
+  color: #d1d5db;
+}
+
+html[data-theme='dark'] .clear-search-button:hover {
+  color: #f3f4f6;
+  background-color: #6b7280;
+}
+
+/* Consistent dark mode for progress and recently visited sections */
+html[data-theme='dark'] .progress-section,
+html[data-theme='dark'] .recently-visited-section {
+  background: linear-gradient(to bottom, #1f2937, #111827);
+  border-bottom: 1px solid #374151;
+}
+
+html[data-theme='dark'] .progress-title,
+html[data-theme='dark'] .recently-visited-title {
+  color: #9ca3af;
+}
+
+html[data-theme='dark'] .toggle-progress-button,
+html[data-theme='dark'] .clear-recent-button {
+  background: #374151;
+  border: 1px solid #4b5563;
+  color: #d1d5db;
+}
+
+html[data-theme='dark'] .toggle-progress-button:hover,
+html[data-theme='dark'] .clear-recent-button:hover {
+  background-color: #4b5563;
+  border-color: #6b7280;
+  color: #f3f4f6;
+}
+
+html[data-theme='dark'] .recent-link {
+  color: #d1d5db;
+}
+
+html[data-theme='dark'] .recent-link:hover {
+  background-color: #374151;
+  color: #93c5fd;
+  border-left: 2px solid #93c5fd;
+}
+
+html[data-theme='dark'] .progress-text {
+  color: #d1d5db;
+}
+
+html[data-theme='dark'] .progress-stats {
+  color: #9ca3af;
+}
+
+html[data-theme='dark'] .stat-item {
+  background-color: #374151;
+  color: #d1d5db;
+  border: 1px solid #4b5563;
+}

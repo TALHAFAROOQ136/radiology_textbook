@@ -80,13 +80,13 @@ export class UserModel {
     this.passwordHash = parsedData.passwordHash;
     this.medicalLevel = parsedData.medicalLevel;
     this.isVerified = parsedData.isVerified;
-    this.verificationToken = parsedData.verificationToken || null;
-    this.passwordResetToken = parsedData.passwordResetToken || null;
-    this.passwordResetExpires = parsedData.passwordResetExpires || null;
+    this.verificationToken = parsedData.verificationToken ?? null;
+    this.passwordResetToken = parsedData.passwordResetToken ?? null;
+    this.passwordResetExpires = parsedData.passwordResetExpires ?? null;
     this.preferences = parsedData.preferences;
     this.createdAt = parsedData.createdAt;
     this.updatedAt = parsedData.updatedAt;
-    this.lastLoginAt = parsedData.lastLoginAt || null;
+    this.lastLoginAt = parsedData.lastLoginAt ?? null;
     this.isActive = parsedData.isActive;
   }
 
@@ -214,13 +214,13 @@ export class UserProfileModel {
 
     this.id = parsedData.id;
     this.userId = parsedData.userId;
-    this.institution = parsedData.institution || null;
-    this.specialtyInterest = parsedData.specialtyInterest || null;
+    this.institution = parsedData.institution ?? null;
+    this.specialtyInterest = parsedData.specialtyInterest ?? null;
     this.learningGoals = parsedData.learningGoals || [];
     this.preferredLanguage = parsedData.preferredLanguage;
     this.timezone = parsedData.timezone;
-    this.bio = parsedData.bio || null;
-    this.avatarUrl = parsedData.avatarUrl || null;
+    this.bio = parsedData.bio ?? null;
+    this.avatarUrl = parsedData.avatarUrl ?? null;
     this.createdAt = parsedData.createdAt;
     this.updatedAt = parsedData.updatedAt;
   }

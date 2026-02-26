@@ -43,7 +43,9 @@ export default logger;
 /**
  * Request logging middleware
  */
-export const requestLogger = (req, res, next) => {
+import { Request, Response, NextFunction } from 'express';
+
+export const requestLogger = (req: Request, res: Response, next: NextFunction) => {
   const startTime = Date.now();
 
   res.on('finish', () => {

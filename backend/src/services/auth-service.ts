@@ -13,7 +13,7 @@ export class AuthService {
     email: string;
     name: string;
     password: string;
-    medicalLevel?: string;
+    medicalLevel?: 'medical_student' | 'resident' | 'fellow' | 'attending' | 'other';
     institution?: string;
     specialtyInterest?: string;
   }): Promise<{ user: User; token: string }> {
@@ -42,8 +42,9 @@ export class AuthService {
       name: userData.name,
       passwordHash,
       medicalLevel: userData.medicalLevel || 'medical_student',
-      institution: userData.institution,
-      specialtyInterest: userData.specialtyInterest
+      isVerified: false,
+      preferences: {},
+      isActive: true
     });
 
     // In a real implementation, save to database
@@ -155,7 +156,7 @@ export class AuthService {
    */
   async updateUserProfile(userId: string, profileData: Partial<{
     name: string;
-    medicalLevel: string;
+    medicalLevel: 'medical_student' | 'resident' | 'fellow' | 'attending' | 'other';
     institution: string;
     specialtyInterest: string;
     preferences: Record<string, unknown>;

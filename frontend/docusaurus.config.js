@@ -24,7 +24,11 @@ const config = {
   projectName: 'radiology-textbook', // Usually your repo name.
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -46,7 +50,20 @@ const config = {
           editUrl:
             'https://github.com/radiology-textbook/radiology-textbook/tree/main/',
         },
-        blog: false,
+        blog: {
+          path: 'blog',
+          routeBasePath: 'blog',
+          showReadingTime: true,
+          feedOptions: {
+            type: ['rss', 'atom'],
+            xslt: true,
+          },
+          editUrl:
+            'https://github.com/radiology-textbook/radiology-textbook/edit/main/',
+          onInlineTags: 'warn',
+          onInlineAuthors: 'warn',
+          onUntruncatedBlogPosts: 'warn',
+        },
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -75,8 +92,6 @@ const config = {
             position: 'left',
             label: 'Textbook',
           },
-          { to: '/dicom-viewer-page', label: 'DICOM Viewer', position: 'left' },  // Renamed due to filename convention
-          { to: '/test-dicom-viewer', label: 'Test DICOM', position: 'left' },  // Available for testing
           { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://github.com/radiology-textbook/radiology-textbook',
@@ -97,11 +112,11 @@ const config = {
               },
               {
                 label: 'Part 2: Positioning',
-                to: '/docs/part-2-positioning/overview',
+                to: '/docs/part-2-positioning',
               },
               {
                 label: 'Part 3: Chest',
-                to: '/docs/part-3-chest/overview',
+                to: '/docs/part-3-chest',
               },
             ],
           },

@@ -10,6 +10,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Chapter 1: Introduction to Radiology',
+          link: {
+            type: 'doc',
+            id: 'part-1-foundations/chapter-01-introduction'
+          },
           items: [
             'part-1-foundations/chapter-01-introduction/History and evolution of medical imaging',
             'part-1-foundations/chapter-01-introduction/Role of radiology in modern medicine',
@@ -27,6 +31,10 @@ const sidebars = {
         {
           type: 'category',
           label: 'Chapter 2: Physics of Medical Imaging',
+          link: {
+            type: 'doc',
+            id: 'part-1-foundations/chapter-02-physics-of-medical-imaging'
+          },
           items: [
             'part-1-foundations/chapter-02-physics-of-medical-imaging/basic-principles-of-x-ray-production',
             'part-1-foundations/chapter-02-physics-of-medical-imaging/image-forming-process',
@@ -76,14 +84,7 @@ const sidebars = {
       type: 'category',
       label: 'Part 2: Patient Positioning and Radiographic Techniques',
       items: [
-        {
-          type: 'category',
-          label: 'Chapter 1: Fundamentals of Patient Positioning',
-          items: [
-            'part-2-positioning/chapter-01-anatomical-terminology-and-planes',
-            'part-2-positioning/anatomical-terminology-and-planes'
-          ]
-        },
+        'part-2-positioning/chapter-01-anatomical-terminology-and-planes',
         'part-2-positioning/chapter-02-chest-radiography-positioning',
         'part-2-positioning/chapter-03-abdominal-pelvic-positioning',
         'part-2-positioning/chapter-04-upper-extremity-positioning',

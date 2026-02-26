@@ -43,8 +43,8 @@ function HomepageHeader() {
               </Link>
               <Link
                 className="button button--primary button--lg"
-                to="/dicom-viewer">
-                View DICOM Cases
+                to="/docs/part-3-chest/chapter-01-chest-anatomy">
+                View Cases
               </Link>
             </div>
           </div>
@@ -148,7 +148,7 @@ function CTASection() {
               </Link>
               <Link
                 className="button button--secondary button--lg"
-                to="/dicom-viewer">
+                to="/docs/part-1-foundations/chapter-01-introduction">
                 View Demo
               </Link>
             </div>

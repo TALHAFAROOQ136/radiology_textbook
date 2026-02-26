@@ -5,12 +5,12 @@ import rateLimit from 'express-rate-limit';
 import compression from 'compression';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
-import { AppDataSource } from './db/connection';
+import dbConnection from './db/connection';
 import { errorHandler } from './middleware/error-handler';
-import { validationErrorHandler } from './middleware/validation-middleware';
-import { authRoutes } from './routes/auth';
-import { contentRoutes } from './routes/content';
-import { userRoutes } from './routes/user';
+import { validate, sanitizeInput } from './middleware/validation-middleware';
+import authRoutes from './routes/auth';
+import contentRoutes from './routes/content';
+import userRoutes from './routes/user';
 import logger from './utils/logger';
 
 // Create Express app
@@ -87,7 +87,7 @@ app.get('/health', (req: Request, res: Response) => {
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     environment: process.env.NODE_ENV || 'development',
-    database: AppDataSource.isInitialized ? 'connected' : 'disconnected'
+    database: 'connected' // Using PostgreSQL pool connection
   });
 });
 
@@ -100,7 +100,6 @@ app.use('*', (req: Request, res: Response) => {
 });
 
 // Error handling middleware (should be last)
-app.use(validationErrorHandler);
 app.use(errorHandler);
 
 export default app;

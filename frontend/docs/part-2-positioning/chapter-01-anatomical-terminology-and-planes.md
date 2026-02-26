@@ -1,6 +1,6 @@
 ---
 title: "Chapter 1: Positioning Principles"
-sidebar_label: "Chapter 1: Positioning Principles"
+sidebar_label: "Chapter 1: Anatomical Terminology and Planes"
 description: "Fundamental principles of patient positioning in radiology for medical students"
 ---
 
@@ -27,35 +27,9 @@ Proper patient positioning serves several critical functions:
 3. **Radiation Protection**: Optimal positioning minimizes scatter radiation and reduces exposure to both patients and staff
 4. **Efficiency**: Proper positioning reduces the need for repeat exposures, saving time and resources
 
-## Anatomical Position and Planes
+## Introduction to Anatomical References
 
-### Standard Anatomical Position
-
-The standard anatomical position serves as the reference point for all positioning descriptions:
-
-- Patient stands upright facing forward
-- Arms at the sides with palms facing forward
-- Feet flat on the ground, pointing forward
-
-### Anatomical Planes
-
-Understanding anatomical planes is crucial for positioning:
-
-- **Sagittal Plane**: Divides the body into left and right portions
-- **Mid-Sagittal Plane**: Divides the body into equal left and right halves
-- **Coronal (Frontal) Plane**: Divides the body into anterior and posterior portions
-- **Transverse (Axial) Plane**: Divides the body into superior and inferior portions
-
-### Anatomical Directional Terms
-
-- **Anterior/Ventral**: Toward the front of the body
-- **Posterior/Dorsal**: Toward the back of the body
-- **Superior/Cephalad**: Toward the head
-- **Inferior/Caudad**: Toward the feet
-- **Medial**: Toward the midline
-- **Lateral**: Away from the midline
-- **Proximal**: Closer to the point of attachment
-- **Distal**: Farther from the point of attachment
+Anatomical terminology and planes form the foundation of radiologic positioning. For a comprehensive overview of anatomical terminology and planes, please refer to the dedicated section on Anatomical Terminology and Planes.
 
 ## Common Positioning Terminology
 
