@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import './ChatbotWidget.css';
-
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
 
 interface Source {
   title: string;
@@ -31,6 +30,9 @@ function getOrCreateSessionId(): string {
 }
 
 const ChatbotWidget: React.FC = () => {
+  const { siteConfig } = useDocusaurusContext();
+  const BACKEND_URL = (siteConfig.customFields?.backendUrl as string) || 'http://localhost:8000';
+
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {

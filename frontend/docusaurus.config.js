@@ -70,6 +70,10 @@ const config = {
     ],
   ],
 
+  customFields: {
+    backendUrl: process.env.BACKEND_URL || '',
+  },
+
   plugins: [
   ],
 
