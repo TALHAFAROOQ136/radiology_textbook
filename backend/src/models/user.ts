@@ -132,7 +132,7 @@ export class UserModel {
     this.medicalLevel = parsedData.medicalLevel;
     this.preferences = parsedData.preferences;
     this.updatedAt = parsedData.updatedAt;
-    this.lastLoginAt = parsedData.lastLoginAt;
+    this.lastLoginAt = parsedData.lastLoginAt ?? null;
     this.isActive = parsedData.isActive;
   }
 
@@ -244,13 +244,13 @@ export class UserProfileModel {
     const updateData = { ...this, ...profileData, updatedAt: new Date() };
     const parsedData = UserProfileSchema.parse(updateData);
 
-    this.institution = parsedData.institution;
-    this.specialtyInterest = parsedData.specialtyInterest;
+    this.institution = parsedData.institution ?? null;
+    this.specialtyInterest = parsedData.specialtyInterest ?? null;
     this.learningGoals = parsedData.learningGoals;
     this.preferredLanguage = parsedData.preferredLanguage;
     this.timezone = parsedData.timezone;
-    this.bio = parsedData.bio;
-    this.avatarUrl = parsedData.avatarUrl;
+    this.bio = parsedData.bio ?? null;
+    this.avatarUrl = parsedData.avatarUrl ?? null;
     this.updatedAt = parsedData.updatedAt;
   }
 
