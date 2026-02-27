@@ -166,7 +166,7 @@ export async function query(
       .slice(0, 3)
       .map((r, i) => `**${i + 1}. ${r.payload.title} — ${r.payload.chapter}**\n${r.payload.text.substring(0, 400).trimEnd()}…`)
       .join('\n\n');
-    answer = `Here are the most relevant sections from the textbook for your question:\n\n${excerpts}\n\n---\n*Note: AI-generated synthesis is temporarily unavailable. To enable it, add a free [Groq API key](https://console.groq.com) to \`GROQ_API_KEY\` in \`.env\` and restart the server.*`;
+    answer = `Here are the most relevant sections from the textbook for your question:\n\n${excerpts}`;
   }
 
   // 6. Build sources list (deduplicate by chapter)

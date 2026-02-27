@@ -38,7 +38,7 @@ export class UserService {
       email: userData.email,
       name: userData.name,
       passwordHash: userData.passwordHash,
-      medicalLevel: userData.medicalLevel || 'medical_student',
+      medicalLevel: (userData.medicalLevel || 'medical_student') as User['medicalLevel'],
       preferences: {}
     });
 
@@ -87,7 +87,7 @@ export class UserService {
       email: userData.email || 'mock@example.com',
       name: userData.name || 'Mock User',
       passwordHash: userData.passwordHash || 'mock_hash',
-      medicalLevel: userData.medicalLevel || 'medical_student',
+      medicalLevel: (userData.medicalLevel || 'medical_student') as User['medicalLevel'],
       preferences: userData.preferences || {},
       createdAt: new Date(),
       updatedAt: new Date(),

@@ -21,8 +21,6 @@ export const getProfile = async (req: Request, res: Response): Promise<void> => 
       email: req.user?.email,
       name: req.user?.name,
       medicalLevel: req.user?.medicalLevel,
-      institution: req.user?.institution,
-      specialtyInterest: req.user?.specialtyInterest,
       isVerified: req.user?.isVerified,
       preferences: req.user?.preferences
     });
@@ -44,14 +42,12 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    const { name, medicalLevel, institution, specialtyInterest, preferences } = req.body;
+    const { name, medicalLevel, preferences } = req.body;
 
     // Update user profile
     const updatedUser = await userService.updateUser(userId, {
       name,
       medicalLevel,
-      institution,
-      specialtyInterest,
       preferences
     });
 
@@ -62,8 +58,6 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
         email: updatedUser.email,
         name: updatedUser.name,
         medicalLevel: updatedUser.medicalLevel,
-        institution: updatedUser.institution,
-        specialtyInterest: updatedUser.specialtyInterest,
         isVerified: updatedUser.isVerified,
         preferences: updatedUser.preferences
       }
