@@ -2,14 +2,16 @@
  * Content Indexing Script
  *
  * Reads all Markdown chapters from frontend/docs/, chunks them by H2 headings,
- * generates embeddings via OpenAI text-embedding-3-small, and upserts to Qdrant.
+ * generates embeddings via OpenAI text-embedding-3-small, and saves to either:
+ *   - Qdrant Cloud (when QDRANT_URL is set to a real cluster URL), OR
+ *   - Local file store at backend/data/vectors.json (fallback, no extra infra)
  *
  * Run once (or after content updates):
  *   npx ts-node scripts/index-content.ts
  *
  * Prerequisites:
  *   - OPENAI_API_KEY in .env
- *   - QDRANT_URL + QDRANT_API_KEY in .env
+ *   - Optional: QDRANT_URL + QDRANT_API_KEY for cloud storage
  */
 
 import * as fs from 'fs';
@@ -21,6 +23,13 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 import OpenAI from 'openai';
 import { QdrantClient } from '@qdrant/js-client-rest';
+
+const LOCAL_VECTORS_FILE = path.resolve(__dirname, '../data/vectors.json');
+
+function isQdrantConfigured(): boolean {
+  const url = process.env.QDRANT_URL || '';
+  return url.length > 0 && !url.includes('your-cluster-id') && !url.includes('localhost');
+}
 
 const COLLECTION_NAME = 'radiology_textbook';
 const VECTOR_SIZE = 1536;
@@ -179,7 +188,13 @@ async function ensureCollection(): Promise<void> {
 // ─── Main ──────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log('🔍 Finding markdown files...');
+  const useQdrant = isQdrantConfigured();
+  console.log(useQdrant
+    ? `🔌 Storage: Qdrant Cloud (${process.env.QDRANT_URL})`
+    : `💾 Storage: Local file store (${LOCAL_VECTORS_FILE})`
+  );
+
+  console.log('\n🔍 Finding markdown files...');
   const files = findMarkdownFiles(DOCS_DIR);
   console.log(`📄 Found ${files.length} files`);
 
@@ -193,12 +208,17 @@ async function main() {
   }
   console.log(`✂️  Generated ${allChunks.length} chunks`);
 
-  console.log('\n🔌 Connecting to Qdrant...');
-  await ensureCollection();
+  if (useQdrant) {
+    console.log('\n🔌 Connecting to Qdrant Cloud...');
+    await ensureCollection();
+  }
 
   console.log('\n🧠 Generating embeddings and indexing...');
   let indexed = 0;
   let pointId = 1;
+
+  // For local store, accumulate all points first then save once
+  const localPoints: Array<{ id: number; vector: number[]; payload: Record<string, unknown> }> = [];
 
   for (let i = 0; i < allChunks.length; i += BATCH_SIZE) {
     const batch = allChunks.slice(i, i + BATCH_SIZE);
@@ -208,7 +228,7 @@ async function main() {
     try {
       embeddings = await embedBatch(texts);
     } catch (err) {
-      console.error(`❌ Embedding failed for batch at index ${i}:`, err);
+      console.error(`\n❌ Embedding failed for batch at index ${i}:`, err);
       continue;
     }
 
@@ -226,18 +246,28 @@ async function main() {
       },
     }));
 
-    await qdrant.upsert(COLLECTION_NAME, { points, wait: true });
-    indexed += batch.length;
+    if (useQdrant) {
+      await qdrant.upsert(COLLECTION_NAME, { points: points as any, wait: true });
+    } else {
+      localPoints.push(...points);
+    }
 
+    indexed += batch.length;
     const pct = Math.round((indexed / allChunks.length) * 100);
     process.stdout.write(`\r  ${pct}% (${indexed}/${allChunks.length} chunks)`);
 
-    // Small delay to avoid rate limits
+    // Small delay to respect OpenAI rate limits
     await new Promise((r) => setTimeout(r, 200));
   }
 
-  console.log(`\n\n✅ Indexing complete! ${indexed} chunks indexed into '${COLLECTION_NAME}'`);
-  console.log('🚀 You can now start the backend and use the chatbot.');
+  if (!useQdrant) {
+    fs.mkdirSync(path.dirname(LOCAL_VECTORS_FILE), { recursive: true });
+    fs.writeFileSync(LOCAL_VECTORS_FILE, JSON.stringify(localPoints), 'utf-8');
+    console.log(`\n\n💾 Saved ${localPoints.length} vectors to ${LOCAL_VECTORS_FILE}`);
+  }
+
+  console.log(`\n✅ Indexing complete! ${indexed} chunks indexed.`);
+  console.log('🚀 You can now start the backend with: npm run dev');
 }
 
 main().catch((err) => {
