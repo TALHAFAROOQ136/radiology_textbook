@@ -28,6 +28,151 @@ const sidebars = {
             'part-1-foundations/chapter-01-introduction/Overview of the textbook structure'
           ]
         },
+        'part-1-foundations/chapter-03-radiation-safety',
+        'part-1-foundations/chapter-04-contrast-agents',
+        'part-1-foundations/chapter-05-appropriateness-criteria'
+      ],
+      link: {
+        type: 'generated-index',
+        title: 'Part 1: Foundation of Medical Imaging',
+        description: 'Learn the fundamental principles of radiology including physics, safety, and image quality.',
+        slug: '/part-1-foundations'
+      }
+    },
+    {
+      type: 'category',
+      label: 'Part 2: Physics of Medical Imaging',
+      items: [
+        {
+          type: 'category',
+          label: 'Chapter 1: Radiologic Physics',
+          link: {
+            type: 'doc',
+            id: 'part-2-physics/chapter-01-radiologic-physics'
+          },
+          items: [
+            'part-2-physics/chapter-01-lessons/essential-concepts-of-radiologic-science',
+            'part-2-physics/chapter-01-lessons/the-structure-of-matter',
+            'part-2-physics/chapter-01-lessons/electromagnetic-energy',
+            'part-2-physics/chapter-01-lessons/electricity-magnetism-and-electromagnetism'
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Chapter 2: Radiation',
+          link: {
+            type: 'doc',
+            id: 'part-2-physics/chapter-02-x-ray-production'
+          },
+          items: [
+            'part-2-physics/chapter-02-lessons/the-x-ray-imaging-system',
+            'part-2-physics/chapter-02-lessons/the-x-ray-tube',
+            'part-2-physics/chapter-02-lessons/x-ray-production',
+            'part-2-physics/chapter-02-lessons/x-ray-emission',
+            'part-2-physics/chapter-02-lessons/x-ray-interaction-with-matter'
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Chapter 3: The Radiographic Image',
+          link: {
+            type: 'doc',
+            id: 'part-2-physics/chapter-03-image-forming-process'
+          },
+          items: [
+            'part-2-physics/chapter-03-lessons/concepts-of-radiographic-image-quality',
+            'part-2-physics/chapter-03-lessons/control-of-scatter-radiation',
+            'part-2-physics/chapter-03-lessons/screen-film-radiography',
+            'part-2-physics/chapter-03-lessons/screen-film-radiographic-technique'
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Chapter 4: The Digital Radiographic Image',
+          link: {
+            type: 'doc',
+            id: 'part-2-physics/chapter-04-image-quality'
+          },
+          items: [
+            'part-2-physics/chapter-04-lessons/computers-in-medical-imaging',
+            'part-2-physics/chapter-04-lessons/computed-radiography',
+            'part-2-physics/chapter-04-lessons/digital-radiography',
+            'part-2-physics/chapter-04-lessons/digital-radiographic-technique',
+            'part-2-physics/chapter-04-lessons/viewing-the-digital-radiographic-image'
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Chapter 5: Image Artifacts and Quality Control',
+          link: {
+            type: 'doc',
+            id: 'part-2-physics/chapter-05-image-artifacts-and-quality-control'
+          },
+          items: [
+            'part-2-physics/chapter-05-lessons/screen-film-radiographic-artifacts',
+            'part-2-physics/chapter-05-lessons/screen-film-radiographic-quality-control',
+            'part-2-physics/chapter-05-lessons/digital-radiographic-artifacts',
+            'part-2-physics/chapter-05-lessons/digital-radiographic-quality-control'
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Chapter 6: Advanced X-ray Imaging',
+          link: {
+            type: 'doc',
+            id: 'part-2-physics/chapter-06-advanced-x-ray-imaging'
+          },
+          items: [
+            'part-2-physics/chapter-06-lessons/mammography',
+            'part-2-physics/chapter-06-lessons/mammography-quality-control',
+            'part-2-physics/chapter-06-lessons/fluoroscopy',
+            'part-2-physics/chapter-06-lessons/digital-fluoroscopy',
+            'part-2-physics/chapter-06-lessons/interventional-radiography',
+            'part-2-physics/chapter-06-lessons/computed-tomography'
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Chapter 7: Radiobiology',
+          link: {
+            type: 'doc',
+            id: 'part-2-physics/chapter-07-radiobiology'
+          },
+          items: [
+            'part-2-physics/chapter-07-lessons/human-biology',
+            'part-2-physics/chapter-07-lessons/fundamental-principles-of-radiobiology',
+            'part-2-physics/chapter-07-lessons/molecular-radiobiology',
+            'part-2-physics/chapter-07-lessons/cellular-radiobiology',
+            'part-2-physics/chapter-07-lessons/deterministic-effects-of-radiation',
+            'part-2-physics/chapter-07-lessons/stochastic-effects-of-radiation'
+          ]
+        },
+        {
+          type: 'category',
+          label: 'Chapter 8: Radiation Protection',
+          link: {
+            type: 'doc',
+            id: 'part-2-physics/chapter-08-radiation-protection'
+          },
+          items: [
+            'part-2-physics/chapter-08-lessons/health-physics',
+            'part-2-physics/chapter-08-lessons/designing-for-radiation-protection',
+            'part-2-physics/chapter-08-lessons/patient-radiation-dose-management',
+            'part-2-physics/chapter-08-lessons/occupational-radiation-dose-management'
+          ]
+        }
+      ],
+      link: {
+        type: 'generated-index',
+        title: 'Part 2: Physics of Medical Imaging',
+        description: 'Explore the physical principles underlying medical imaging modalities.',
+        slug: '/part-2-physics'
+      }
+    },
+    {
+      type: 'category',
+      label: 'Part 2: Patient Positioning and Radiographic Techniques',
+      items: [
         {
           type: 'category',
           label: 'Chapter 2: Physics of Medical Imaging',
@@ -36,6 +181,7 @@ const sidebars = {
             id: 'part-1-foundations/chapter-02-physics-of-medical-imaging'
           },
           items: [
+            'part-1-foundations/chapter-02-physics-of-medical-imaging/radiologic-physics',
             'part-1-foundations/chapter-02-physics-of-medical-imaging/basic-principles-of-x-ray-production',
             'part-1-foundations/chapter-02-physics-of-medical-imaging/image-forming-process',
             'part-1-foundations/chapter-02-physics-of-medical-imaging/image-quality',
@@ -69,21 +215,6 @@ const sidebars = {
             }
           ]
         },
-        'part-1-foundations/chapter-03-radiation-safety',
-        'part-1-foundations/chapter-04-contrast-agents',
-        'part-1-foundations/chapter-05-appropriateness-criteria'
-      ],
-      link: {
-        type: 'generated-index',
-        title: 'Part 1: Foundation of Medical Imaging',
-        description: 'Learn the fundamental principles of radiology including physics, safety, and image quality.',
-        slug: '/part-1-foundations'
-      }
-    },
-    {
-      type: 'category',
-      label: 'Part 2: Patient Positioning and Radiographic Techniques',
-      items: [
         'part-2-positioning/chapter-01-anatomical-terminology-and-planes',
         'part-2-positioning/chapter-02-chest-radiography-positioning',
         'part-2-positioning/chapter-03-abdominal-pelvic-positioning',

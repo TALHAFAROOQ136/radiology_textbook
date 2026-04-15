@@ -65,7 +65,7 @@
 
 #### Chapter 6: Fundamentals of Patient Positioning
 - Anatomical terminology and planes
-- Standard body positions: supine, prone, lateral, oblique
+-  Standard body positions: supine, prone, lateral, oblique
 - Positioning principles for optimal image quality
 - Patient communication and comfort
 - Immobilization techniques

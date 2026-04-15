@@ -1,0 +1,59 @@
+/* Chapter header injected above every doc page */
+.chapterHeader {
+  max-width: 820px;
+  margin: 0 auto 0.5rem;
+  padding: 0 0 0.5rem;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.partBadge {
+  display: inline-flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--part-color) 10%, transparent);
+  color: var(--part-color);
+  border: 1px solid color-mix(in srgb, var(--part-color) 25%, transparent);
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+[data-theme='dark'] .partBadge {
+  background: color-mix(in srgb, var(--part-color) 15%, transparent);
+  border-color: color-mix(in srgb, var(--part-color) 30%, transparent);
+}
+
+.readTime {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: #7a8fa8;
+  font-weight: 500;
+}
+
+[data-theme='dark'] .readTime { color: #4a6a88; }
+
+.clockIcon {
+  width: 13px;
+  height: 13px;
+}
+
+.headerLine {
+  height: 3px;
+  background: linear-gradient(90deg, var(--part-color), transparent);
+  border-radius: 2px;
+  opacity: 0.6;
+  margin-top: 0.25rem;
+}
+
+[data-theme='dark'] .headerLine { opacity: 0.4; }

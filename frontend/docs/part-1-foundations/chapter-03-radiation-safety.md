@@ -14,6 +14,9 @@ By the end of this chapter, students should be able to:
 - Calculate and interpret radiation dose measurements
 - Identify special considerations for vulnerable populations
 - Describe radiation protection measures for healthcare workers
+- Explain radiation safety protocols in nuclear medicine
+- Counsel patients effectively about radiation risks and benefits
+- Respond appropriately to radiation accidents and emergencies
 
 ---
 
@@ -361,6 +364,251 @@ Interventional radiology involves the highest occupational doses:
 
 ---
 
+## 3.7 Radiation Safety in Nuclear Medicine
+
+### Unique Challenges in Nuclear Medicine
+
+Nuclear medicine differs from conventional radiology in that the **radioactive source is inside the patient** (internal emitter), creating distinct radiation safety concerns:
+
+- Radiation exposure continues for hours to days after administration
+- Patients themselves become temporary radiation sources
+- Different radionuclides have different physical and biological half-lives
+- Staff, family members, and the public require protection
+
+### Common Radionuclides and Their Properties
+
+| Radionuclide | Half-life | Primary Use | Emission Type |
+|---|---|---|---|
+| **Technetium-99m (Tc-99m)** | 6 hours | Bone, lung, cardiac scans | Gamma (140 keV) |
+| **Fluorine-18 (F-18)** | 110 minutes | PET-CT (FDG) | Positron → 511 keV |
+| **Iodine-131 (I-131)** | 8 days | Thyroid cancer treatment | Beta + Gamma |
+| **Iodine-123 (I-123)** | 13 hours | Thyroid imaging | Gamma |
+| **Gallium-68 (Ga-68)** | 68 minutes | PSMA PET, neuroendocrine | Positron |
+| **Lutetium-177 (Lu-177)** | 6.6 days | PRRT therapy | Beta + Gamma |
+
+### Radiation Safety for Nuclear Medicine Staff
+
+**Key exposure sources:**
+- Injection and preparation of radiopharmaceuticals
+- Patient handling during imaging
+- Hot lab work (dose calibration, preparation)
+
+**Protective measures:**
+- **Syringe shields:** Lead-lined syringes reduce hand dose by >90% for gamma emitters
+- **Vial shields:** L-shaped lead or tungsten shields during preparation
+- **Tongs and remote handling tools:** Maintain distance during preparation
+- **PET isotopes (F-18):** Higher energy (511 keV) — lead provides less shielding; time and distance more important
+
+**Dose rates near patients:**
+
+| Administered Activity | Dose Rate at 1 m |
+|---|---|
+| Tc-99m bone scan (~740 MBq) | ~20 µSv/hr |
+| F-18 FDG PET (~370 MBq) | ~60 µSv/hr |
+| I-131 therapy dose (3.7 GBq) | ~400 µSv/hr |
+
+### Radiation Protection for Patients' Families
+
+**General guidance after diagnostic studies (Tc-99m, F-18):**
+- Maintain 1–2 m distance from close contacts for 6–12 hours
+- Avoid prolonged contact with young children and pregnant women
+- Flush toilet twice; wash hands thoroughly after urination (urinary excretion)
+
+**After I-131 therapy:**
+- Avoid close contact with others for 3–7 days (dose-dependent)
+- Sleep separately from partner and children
+- Avoid public transport and crowded places for first 2–3 days
+- Special instructions for international travel (radiation portal detectors)
+
+### Radioactive Waste Management in Nuclear Medicine
+
+**Short-lived waste (T½ &lt; 65 days):**
+- Stored in shielded containers ("decay in storage")
+- Released as ordinary waste after 10 half-lives (activity &lt;1 µCi)
+- Monitored with survey meters before disposal
+
+**Long-lived waste:**
+- Must be disposed of through licensed radioactive waste contractors
+- Proper labeling and documentation required
+
+**Contamination incidents:**
+- Survey all work surfaces and equipment regularly
+- Decontaminate with soap and water (most radiopharmaceuticals are water-soluble)
+- Report to Radiation Safety Officer (RSO)
+
+> **Clinical Pearl:** The most important concept in nuclear medicine safety is **"hot lab hygiene"** — keeping radioactive materials contained within designated areas and monitoring frequently for contamination prevents the vast majority of unintended exposures.
+
+---
+
+## 3.8 Patient Communication About Radiation Risk
+
+### Why Communication Matters
+
+Patients increasingly ask about radiation risks before consenting to imaging. Effective communication:
+- Builds trust and reduces anxiety
+- Supports informed consent
+- Prevents refusal of clinically necessary procedures
+- Corrects common misconceptions (e.g., "CT causes cancer")
+
+### Common Patient Concerns and Evidence-Based Responses
+
+**"Is CT dangerous? Will I get cancer?"**
+
+> *Appropriate response:* "CT uses X-rays, which carry a very small risk. A CT of the abdomen delivers roughly the same radiation you receive naturally from the environment over 3 years. The risk of cancer from this exam is estimated to be less than 1 in 2,000 — much smaller than the risk of missing the diagnosis we're investigating."
+
+**"I'm worried because I've had many X-rays/CTs in the past."**
+
+> *Appropriate response:* "We track radiation doses, and your previous exams are part of the picture. Radiation effects from diagnostic imaging are cumulative but still extremely low. The benefit of accurate diagnosis far outweighs this small risk, and we always aim to use the lowest dose that gives us a clear image."
+
+**"Can't you use an MRI or ultrasound instead?"**
+
+> *Appropriate response:* "That's a great question. For [this specific clinical problem], [CT/X-ray] gives us information that MRI/ultrasound cannot provide as reliably, such as [bone detail / speed in emergencies / vascular anatomy]. We choose imaging based on what will best answer the clinical question."
+
+### Effective Communication Techniques
+
+**Use relatable comparisons:**
+
+| Examination | Lay Comparison |
+|---|---|
+| Chest X-ray | 2–3 hours of natural background radiation |
+| CT Abdomen | Living in Denver (high altitude) for 1 year |
+| Mammogram | 7-week vacation in a high-background area |
+| PET-CT | Background radiation over 8 years |
+
+**The "3 Questions" framework for patient conversations:**
+1. **What is the imaging for?** — Explain the clinical benefit clearly
+2. **What is the risk?** — Give a realistic, contextualized risk estimate
+3. **What are the alternatives?** — Acknowledge alternatives and why they may be less suitable
+
+**Avoid:**
+- Excessive technical language ("milliSieverts," "effective dose")
+- Dismissiveness ("it's nothing, don't worry")
+- Overpromising ("absolutely zero risk")
+
+### Documenting Radiation Communication
+
+For high-dose procedures (CT, fluoroscopy, nuclear medicine):
+- Record that radiation discussion occurred in clinical notes
+- For fluoroscopic procedures >60 minutes or skin dose >3 Gy: document and follow up for potential skin injury
+- Provide written information sheets when available
+
+### Special Communication Situations
+
+**Pediatric patients:**
+- Address parents' concerns specifically — children are more radiosensitive
+- Emphasize size-adjusted protocols and dose reduction measures
+- Discuss alternatives (ultrasound first for abdominal pain in children)
+
+**Patients who refuse medically necessary imaging:**
+- Explore underlying fears (cancer phobia, previous bad experience)
+- Involve senior clinician if refusal may harm the patient
+- Document the discussion and patient's autonomous decision
+
+**Patients requesting unnecessary imaging:**
+- Validate concerns while explaining why imaging may not be indicated
+- Use clinical decision support guidelines (e.g., ACR Appropriateness Criteria)
+- "Doing more imaging" is not always better medicine
+
+---
+
+## 3.9 Radiation Accidents and Emergency Protocols
+
+### Classification of Radiation Incidents
+
+**Level 1 — Minor Incidents (Local response):**
+- Small surface contamination in a controlled area
+- Dropped sealed source that remains intact
+- Minor procedural errors with no significant dose received
+
+**Level 2 — Significant Incidents (Department response):**
+- Larger contamination events
+- Patient receiving wrong radiopharmaceutical dose (>50% error)
+- Unintended exposure of non-radiation worker above annual limit
+
+**Level 3 — Major Emergencies (Hospital/National response):**
+- Lost or stolen radioactive source
+- Radiation therapy wrong-site treatment causing significant harm
+- Radiological dispersal device ("dirty bomb")
+- Nuclear reactor accident with external release
+
+### Immediate Response to Radiation Incidents
+
+**RACE protocol for contamination incidents:**
+
+1. **Remove** — Remove the person from the contaminated area
+2. **Alert** — Alert the Radiation Safety Officer immediately
+3. **Contain** — Contain the contamination (close doors, restrict access)
+4. **Evaluate** — Survey individuals for contamination and dose estimation
+
+**First aid priority:**
+> **Medical treatment always comes before radiation decontamination.** A bleeding, unconscious, or otherwise critically ill patient must receive immediate medical care regardless of contamination status. Radiation contamination rarely poses an immediate life threat; conventional injuries do.
+
+### Personal Contamination Management
+
+**External contamination (skin/clothing):**
+1. Remove and bag clothing (reduces contamination by ~80%)
+2. Wash skin with soap and water (gentle, avoid abrasion)
+3. Survey with Geiger counter after washing
+4. Repeat until activity is at background or within acceptable limits
+5. Do NOT scrub — broken skin increases internal absorption
+
+**Internal contamination (ingestion/inhalation/wound):**
+- Immediately report to RSO and occupational health
+- Bioassay (urine/fecal monitoring) to estimate intake
+- Thyroid uptake measurement for radioiodine incidents
+- Specific antidotes may be indicated:
+  - Potassium iodide (KI): blocks thyroid uptake after radioiodine exposure
+  - Prussian blue: enhances Cs-137 and Tl excretion
+  - DTPA: chelates transuranic elements (Pu, Am)
+
+### Whole-Body Radiation Exposure (Acute Radiation Syndrome)
+
+Acute Radiation Syndrome (ARS) occurs after whole-body doses >1 Gy over a short period — not relevant to diagnostic imaging but important for emergency preparedness.
+
+**Clinical phases of ARS:**
+
+| Phase | Timing | Features |
+|---|---|---|
+| **Prodromal** | Minutes to hours | Nausea, vomiting, fatigue, diarrhea |
+| **Latent** | Days to weeks | Apparent improvement |
+| **Manifest illness** | Weeks | Bone marrow suppression, infection, hemorrhage |
+| **Recovery or death** | Weeks to months | Depends on dose |
+
+**Dose-response thresholds:**
+
+| Dose (whole body) | Expected Outcome |
+|---|---|
+| &lt;0.1 Gy | No clinically detectable effects |
+| 0.1–1 Gy | Mild lymphocyte depression, no symptoms |
+| 1–2 Gy | Mild ARS; most survive without treatment |
+| 2–6 Gy | Bone marrow syndrome; survival depends on treatment |
+| 6–10 Gy | Severe bone marrow failure; intensive support required |
+| >10 Gy | Gastrointestinal and neurovascular syndrome; usually fatal |
+
+### Nuclear/Radiological Emergency Preparedness
+
+**Hospital responsibilities:**
+- Maintain radiation emergency plan (updated annually)
+- Train emergency department staff to recognize and manage contaminated casualties
+- Stock radiation emergency supplies (survey meters, decontamination kits, KI tablets)
+- Designate decontamination area (typically outside emergency department)
+
+**Triage at the scene of a radiological emergency:**
+1. Treat life-threatening injuries first (conventional trauma triage applies)
+2. Move victims away from source
+3. Establish contamination control zone
+4. Document estimated dose from exposure history (time, distance, shielding)
+5. Transport to hospital with advance notification
+
+**Communicating with the public during radiological emergencies:**
+- Authoritative, calm messaging prevents panic
+- "Shelter in place" vs. evacuation: depends on incident type and dose projections
+- Avoid speculative information; refer to official sources (CDC, EPA, NRC)
+
+> **Key Principle:** Radiation accidents in healthcare settings are rare but preparedness is mandatory. Every radiology and nuclear medicine department must have written emergency procedures, conduct regular drills, and ensure all staff know how to contact the Radiation Safety Officer at any time.
+
+---
+
 ## Key Points Summary
 
 1. **Ionizing radiation causes biological damage** primarily through indirect effects (free radical formation) and directly by damaging DNA
@@ -377,6 +625,14 @@ Interventional radiology involves the highest occupational doses:
 
 7. **Dosimeters must be worn** at all times in radiation areas to monitor cumulative exposure
 
+8. **Nuclear medicine patients** become temporary radiation sources; specific precautions depend on the radionuclide and administered activity
+
+9. **Patient communication** should contextualize radiation risk using relatable comparisons and always emphasize the benefit of accurate diagnosis
+
+10. **Medical treatment always precedes decontamination** — conventional injuries are more immediately life-threatening than radiation contamination
+
+11. **Acute Radiation Syndrome** requires whole-body doses >1 Gy; not relevant to diagnostic imaging but important for emergency preparedness
+
 ---
 
 ## Review Questions
@@ -390,6 +646,16 @@ Interventional radiology involves the highest occupational doses:
 4. Which tissues are most radiosensitive, and why?
 
 5. What are the three deterministic factors that determine radiosensitivity according to the Law of Bergonié and Tribondeau?
+
+6. A patient received F-18 FDG for a PET-CT scan (370 MBq administered). What radiation precautions should you advise for their family members at home?
+
+7. A patient is anxious about having a CT chest and says "I heard CT causes cancer, I don't want one." How would you counsel this patient using the ALARA framework and risk communication principles?
+
+8. During a nuclear medicine procedure, a spill of Tc-99m occurs on a technologist's hands. Outline the immediate steps you would take.
+
+9. What is Acute Radiation Syndrome and at what approximate whole-body dose does it begin to manifest clinically?
+
+10. A hospital receives multiple casualties from a suspected radiological incident. A victim has a severe leg fracture and is also contaminated. What is the correct priority of care?
 
 ---
 
