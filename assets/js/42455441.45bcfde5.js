@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkradiology_textbook_frontend=globalThis.webpackChunkradiology_textbook_frontend||[]).push([[7390],{9805(o){o.exports=JSON.parse('{"metadata":{"permalink":"/radiology_textbook/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);

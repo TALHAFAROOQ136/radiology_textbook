@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkradiology_textbook_frontend=globalThis.webpackChunkradiology_textbook_frontend||[]).push([[1903],{1912(o){o.exports=JSON.parse('{"blogBasePath":"/radiology_textbook/blog","blogTitle":"Blog","authorsListPath":"/radiology_textbook/blog/authors"}')}}]);
