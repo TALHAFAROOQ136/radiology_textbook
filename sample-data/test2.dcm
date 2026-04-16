@@ -1,0 +1,4 @@
+// Mock DICOM file 2 for testing purposes
+// In a real implementation, this would be actual DICOM data
+console.log("This is a second placeholder for DICOM data");
+export default {};
