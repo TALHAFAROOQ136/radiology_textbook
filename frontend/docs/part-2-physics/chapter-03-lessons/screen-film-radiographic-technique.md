@@ -1,7 +1,7 @@
 ---
 id: screen-film-radiographic-technique
-title: "Screen-Film Radiographic Technique"
-sidebar_label: "Screen-Film Radiographic Technique"
+title: "Screen-Film Technique"
+sidebar_label: "Screen-Film Technique"
 ---
 
 # Screen-Film Radiographic Technique

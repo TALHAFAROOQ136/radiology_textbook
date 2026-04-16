@@ -1,7 +1,7 @@
 ---
 id: the-x-ray-tube
-title: "The X-ray Tube"
-sidebar_label: "The X-ray Tube"
+title: "The X-Ray Tube"
+sidebar_label: "The X-Ray Tube"
 ---
 
 # The X-ray Tube

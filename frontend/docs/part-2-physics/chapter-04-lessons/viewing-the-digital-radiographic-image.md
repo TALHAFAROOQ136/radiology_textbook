@@ -1,7 +1,7 @@
 ---
 id: viewing-the-digital-radiographic-image
-title: "Viewing the Digital Radiographic Image"
-sidebar_label: "Viewing the Digital Radiographic Image"
+title: "Viewing Digital Radiographic Images"
+sidebar_label: "Viewing Digital Radiographic Images"
 ---
 
 # Viewing the Digital Radiographic Image

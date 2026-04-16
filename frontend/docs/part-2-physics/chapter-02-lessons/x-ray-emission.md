@@ -1,7 +1,7 @@
 ---
 id: x-ray-emission
-title: "X-ray Emission"
-sidebar_label: "X-ray Emission"
+title: "X-Ray Emission Spectrum"
+sidebar_label: "X-Ray Emission Spectrum"
 ---
 
 # X-ray Emission

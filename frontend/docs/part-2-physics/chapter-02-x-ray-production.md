@@ -1,7 +1,7 @@
 ---
 id: chapter-02-x-ray-production
-title: "Chapter 2: Radiation"
-sidebar_label: "Chapter 2: Radiation"
+title: "Chapter 2: X-Ray Generation and Radiation Physics"
+sidebar_label: "Chapter 2: X-Ray Generation and Radiation Physics"
 ---
 
 # Radiation

@@ -1,7 +1,7 @@
 ---
 id: concepts-of-radiographic-image-quality
-title: "Concepts of Radiographic Image Quality"
-sidebar_label: "Concepts of Radiographic Image Quality"
+title: "Radiographic Image Quality"
+sidebar_label: "Radiographic Image Quality"
 ---
 
 # Concepts of Radiographic Image Quality

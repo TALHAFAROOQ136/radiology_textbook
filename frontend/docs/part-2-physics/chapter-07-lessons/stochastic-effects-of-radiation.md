@@ -1,7 +1,7 @@
 ---
 id: stochastic-effects-of-radiation
-title: "Stochastic Effects of Radiation"
-sidebar_label: "Stochastic Effects of Radiation"
+title: "Stochastic Radiation Effects"
+sidebar_label: "Stochastic Radiation Effects"
 ---
 
 # Stochastic Effects of Radiation

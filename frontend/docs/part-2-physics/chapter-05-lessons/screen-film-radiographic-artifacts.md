@@ -1,7 +1,7 @@
 ---
 id: screen-film-radiographic-artifacts
-title: "Screen-Film Radiographic Artifacts"
-sidebar_label: "Screen-Film Radiographic Artifacts"
+title: "Screen-Film Artifacts"
+sidebar_label: "Screen-Film Artifacts"
 ---
 
 # Screen-Film Radiographic Artifacts

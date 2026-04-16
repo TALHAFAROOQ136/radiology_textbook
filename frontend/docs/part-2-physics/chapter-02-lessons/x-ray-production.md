@@ -1,7 +1,7 @@
 ---
 id: x-ray-production
-title: "X-ray Production"
-sidebar_label: "X-ray Production"
+title: "X-Ray Production"
+sidebar_label: "X-Ray Production"
 ---
 
 # X-ray Production

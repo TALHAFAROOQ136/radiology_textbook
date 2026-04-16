@@ -1,7 +1,7 @@
 ---
 id: electricity-magnetism-and-electromagnetism
-title: "Electricity, Magnetism, and Electromagnetism"
-sidebar_label: "Electricity, Magnetism, and Electromagnetism"
+title: "Electricity, Magnetism & Electromagnetism"
+sidebar_label: "Electricity, Magnetism & Electromagnetism"
 ---
 
 # Electricity, Magnetism, and Electromagnetism

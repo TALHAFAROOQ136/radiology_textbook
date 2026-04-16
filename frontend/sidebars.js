@@ -45,7 +45,7 @@ const sidebars = {
       items: [
         {
           type: 'category',
-          label: 'Chapter 1: Radiologic Physics',
+          label: 'Chapter 1: Foundations of Radiologic Physics',
           link: {
             type: 'doc',
             id: 'part-2-physics/chapter-01-radiologic-physics'
@@ -59,7 +59,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Chapter 2: Radiation',
+          label: 'Chapter 2: X-Ray Generation and Radiation Physics',
           link: {
             type: 'doc',
             id: 'part-2-physics/chapter-02-x-ray-production'
@@ -74,7 +74,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Chapter 3: The Radiographic Image',
+          label: 'Chapter 3: Radiographic Image Formation',
           link: {
             type: 'doc',
             id: 'part-2-physics/chapter-03-image-forming-process'
@@ -88,7 +88,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Chapter 4: The Digital Radiographic Image',
+          label: 'Chapter 4: Digital Radiography and Imaging',
           link: {
             type: 'doc',
             id: 'part-2-physics/chapter-04-image-quality'
@@ -103,7 +103,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Chapter 5: Image Artifacts and Quality Control',
+          label: 'Chapter 5: Imaging Artifacts and Quality Assurance',
           link: {
             type: 'doc',
             id: 'part-2-physics/chapter-05-image-artifacts-and-quality-control'
@@ -128,12 +128,13 @@ const sidebars = {
             'part-2-physics/chapter-06-lessons/fluoroscopy',
             'part-2-physics/chapter-06-lessons/digital-fluoroscopy',
             'part-2-physics/chapter-06-lessons/interventional-radiography',
-            'part-2-physics/chapter-06-lessons/computed-tomography'
+            'part-2-physics/chapter-06-lessons/computed-tomography',
+            'part-2-physics/chapter-06-lessons/difference-between-xray-and-ct-scan'
           ]
         },
         {
           type: 'category',
-          label: 'Chapter 7: Radiobiology',
+          label: 'Chapter 7: Radiation Biology',
           link: {
             type: 'doc',
             id: 'part-2-physics/chapter-07-radiobiology'
@@ -149,7 +150,7 @@ const sidebars = {
         },
         {
           type: 'category',
-          label: 'Chapter 8: Radiation Protection',
+          label: 'Chapter 8: Radiation Safety and Protection',
           link: {
             type: 'doc',
             id: 'part-2-physics/chapter-08-radiation-protection'

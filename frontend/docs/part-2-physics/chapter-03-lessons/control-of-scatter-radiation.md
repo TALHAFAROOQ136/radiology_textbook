@@ -1,7 +1,7 @@
 ---
 id: control-of-scatter-radiation
-title: "Control of Scatter Radiation"
-sidebar_label: "Control of Scatter Radiation"
+title: "Scatter Radiation Control"
+sidebar_label: "Scatter Radiation Control"
 ---
 
 # Control of Scatter Radiation

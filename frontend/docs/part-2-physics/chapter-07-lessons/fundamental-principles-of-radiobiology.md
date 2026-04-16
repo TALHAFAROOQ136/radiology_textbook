@@ -1,7 +1,7 @@
 ---
 id: fundamental-principles-of-radiobiology
-title: "Fundamental Principles of Radiobiology"
-sidebar_label: "Fundamental Principles of Radiobiology"
+title: "Fundamentals of Radiobiology"
+sidebar_label: "Fundamentals of Radiobiology"
 ---
 
 # Fundamental Principles of Radiobiology

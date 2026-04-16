@@ -1,7 +1,7 @@
 ---
 id: deterministic-effects-of-radiation
-title: "Deterministic Effects of Radiation"
-sidebar_label: "Deterministic Effects of Radiation"
+title: "Deterministic Radiation Effects"
+sidebar_label: "Deterministic Radiation Effects"
 ---
 
 # Deterministic Effects of Radiation

@@ -1,7 +1,7 @@
 ---
 id: x-ray-interaction-with-matter
-title: "X-ray Interaction with Matter"
-sidebar_label: "X-ray Interaction with Matter"
+title: "X-Ray Interactions with Matter"
+sidebar_label: "X-Ray Interactions with Matter"
 ---
 
 # X-ray Interaction with Matter

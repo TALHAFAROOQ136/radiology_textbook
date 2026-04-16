@@ -1,7 +1,7 @@
 ---
 id: chapter-05-image-artifacts-and-quality-control
-title: "Chapter 5: Image Artifacts and Quality Control"
-sidebar_label: "Chapter 5: Image Artifacts and Quality Control"
+title: "Chapter 5: Imaging Artifacts and Quality Assurance"
+sidebar_label: "Chapter 5: Imaging Artifacts and Quality Assurance"
 ---
 
 # Image Artifacts and Quality Control

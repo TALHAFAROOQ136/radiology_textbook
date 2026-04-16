@@ -1,7 +1,7 @@
 ---
 id: screen-film-radiographic-quality-control
-title: "Screen-Film Radiographic Quality Control"
-sidebar_label: "Screen-Film Radiographic Quality Control"
+title: "Screen-Film Quality Control"
+sidebar_label: "Screen-Film Quality Control"
 ---
 
 # Screen-Film Radiographic Quality Control

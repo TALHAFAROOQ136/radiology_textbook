@@ -1,7 +1,7 @@
 ---
 id: chapter-08-radiation-protection
-title: "Chapter 8: Radiation Protection"
-sidebar_label: "Chapter 8: Radiation Protection"
+title: "Chapter 8: Radiation Safety and Protection"
+sidebar_label: "Chapter 8: Radiation Safety and Protection"
 ---
 
 # Radiation Protection

@@ -1,7 +1,7 @@
 ---
 id: human-biology
-title: "Human Biology"
-sidebar_label: "Human Biology"
+title: "Human Biology and Cells"
+sidebar_label: "Human Biology and Cells"
 ---
 
 # Human Biology

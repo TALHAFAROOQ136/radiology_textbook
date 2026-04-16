@@ -1,7 +1,7 @@
 ---
 id: chapter-04-image-quality
-title: "Chapter 4: The Digital Radiographic Image"
-sidebar_label: "Chapter 4: The Digital Radiographic Image"
+title: "Chapter 4: Digital Radiography and Imaging"
+sidebar_label: "Chapter 4: Digital Radiography and Imaging"
 ---
 
 # The Digital Radiographic Image

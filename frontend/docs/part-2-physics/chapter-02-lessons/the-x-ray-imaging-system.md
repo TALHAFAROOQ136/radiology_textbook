@@ -1,7 +1,7 @@
 ---
 id: the-x-ray-imaging-system
-title: "The X-ray Imaging System"
-sidebar_label: "The X-ray Imaging System"
+title: "X-Ray Imaging System"
+sidebar_label: "X-Ray Imaging System"
 ---
 
 # The X-ray Imaging System

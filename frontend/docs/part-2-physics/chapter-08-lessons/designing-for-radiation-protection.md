@@ -1,7 +1,7 @@
 ---
 id: designing-for-radiation-protection
-title: "Designing for Radiation Protection"
-sidebar_label: "Designing for Radiation Protection"
+title: "Radiation Protection Design"
+sidebar_label: "Radiation Protection Design"
 ---
 
 # Designing for Radiation Protection

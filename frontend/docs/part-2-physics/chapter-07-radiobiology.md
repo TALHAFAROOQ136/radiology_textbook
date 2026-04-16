@@ -1,7 +1,7 @@
 ---
 id: chapter-07-radiobiology
-title: "Chapter 7: Radiobiology"
-sidebar_label: "Chapter 7: Radiobiology"
+title: "Chapter 7: Radiation Biology"
+sidebar_label: "Chapter 7: Radiation Biology"
 ---
 
 # Radiobiology

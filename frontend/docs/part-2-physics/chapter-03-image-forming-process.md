@@ -1,7 +1,7 @@
 ---
 id: chapter-03-image-forming-process
-title: "Chapter 3: The Radiographic Image"
-sidebar_label: "Chapter 3: The Radiographic Image"
+title: "Chapter 3: Radiographic Image Formation"
+sidebar_label: "Chapter 3: Radiographic Image Formation"
 ---
 
 # The Radiographic Image

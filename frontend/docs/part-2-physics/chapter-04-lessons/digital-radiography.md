@@ -1,7 +1,7 @@
 ---
 id: digital-radiography
-title: "Digital Radiography"
-sidebar_label: "Digital Radiography"
+title: "Digital Radiography (DR)"
+sidebar_label: "Digital Radiography (DR)"
 ---
 
 # Digital Radiography

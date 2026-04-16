@@ -1,7 +1,7 @@
 ---
 id: essential-concepts-of-radiologic-science
-title: "Essential Concepts of Radiologic Science"
-sidebar_label: "Essential Concepts of Radiologic Science"
+title: "Core Concepts of Radiologic Science"
+sidebar_label: "Core Concepts of Radiologic Science"
 ---
 
 # Essential Concepts of Radiologic Science

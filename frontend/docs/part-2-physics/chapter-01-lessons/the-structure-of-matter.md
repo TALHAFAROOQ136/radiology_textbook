@@ -1,7 +1,7 @@
 ---
 id: the-structure-of-matter
-title: "The Structure of Matter"
-sidebar_label: "The Structure of Matter"
+title: "Structure of Matter"
+sidebar_label: "Structure of Matter"
 ---
 
 # The Structure of Matter

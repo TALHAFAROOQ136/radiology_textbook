@@ -1,12 +1,40 @@
 ---
 id: chapter-01-radiologic-physics
-title: "Chapter 1: Radiologic Physics"
-sidebar_label: "Chapter 1: Radiologic Physics"
+title: "Chapter 1: Foundations of Radiologic Physics"
+sidebar_label: "Chapter 1: Foundations of Radiologic Physics"
 ---
 
-# Radiologic Physics
+# Foundations of Radiologic Physics
 
 Radiologic physics is the branch of physics that underpins all diagnostic and therapeutic imaging modalities. It encompasses the nature of electromagnetic radiation, its interactions with matter, and the principles of energy transfer that make medical imaging possible.
+
+---
+
+## Lessons in This Chapter
+
+<div className="lesson-cards">
+
+### 📘 [Essential Concepts of Radiologic Science](./chapter-01-lessons/essential-concepts-of-radiologic-science)
+Introduces the foundational principles of radiologic science — what radiation is, how it is produced, and the basic quantities used to describe and measure it. Covers units of radiation measurement, types of ionising radiation, and the core vocabulary every radiologist must know.
+
+---
+
+### 🔬 [The Structure of Matter](./chapter-01-lessons/the-structure-of-matter)
+Explores the atomic and subatomic world that X-rays interact with. Topics include atomic structure (nucleus, electrons, shells), the periodic table in the context of radiology, ionisation, excitation, and why high atomic number elements (like iodine and barium) are used as contrast agents.
+
+---
+
+### ⚡ [Electromagnetic Energy](./chapter-01-lessons/electromagnetic-energy)
+Covers the nature of electromagnetic (EM) radiation, the full EM spectrum from radiofrequency to gamma rays, and the wave-particle duality of X-rays. Explains photon energy (E = hf), wavelength, and frequency — and how these properties determine the imaging capability of each modality.
+
+---
+
+### 🧲 [Electricity, Magnetism, and Electromagnetism](./chapter-01-lessons/electricity-magnetism-and-electromagnetism)
+Describes the electrical and magnetic principles that power X-ray tubes and MRI machines. Topics include electric current, voltage, resistance (Ohm's law), transformers, electromagnetic induction, and how alternating current is used to generate the high voltages needed for X-ray production.
+
+</div>
+
+---
 
 ## The Electromagnetic Spectrum
 

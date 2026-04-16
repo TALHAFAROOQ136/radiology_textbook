@@ -1,7 +1,7 @@
 ---
 id: computed-radiography
-title: "Computed Radiography"
-sidebar_label: "Computed Radiography"
+title: "Computed Radiography (CR)"
+sidebar_label: "Computed Radiography (CR)"
 ---
 
 # Computed Radiography
